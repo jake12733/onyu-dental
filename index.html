@@ -30,6 +30,7 @@ a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 input,select,textarea{font:inherit;color:inherit}
 .wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+.tm>*,.calc>*,.wt>*,.book>*,.hero-grid>*,.promise>*,.faq>*,.docs>*{min-width:0}
 .eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--co)}
 .eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--co)}
 .h2{font-size:clamp(32px,4.4vw,56px);line-height:1.15;font-weight:800;letter-spacing:-.035em;margin-top:14px}
@@ -153,14 +154,14 @@ nav.gnb a:hover,nav.gnb a.act{background:#fff;color:var(--ink)}
 .dept h3{font-size:clamp(22px,2vw,28px);letter-spacing:-.03em;line-height:1.2}
 .dept p{font-size:14px;opacity:.85;margin-top:6px;max-width:340px}
 .dept .tags{display:flex;gap:6px;flex-wrap:wrap}
-.dept .tags span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.18);backdrop-filter:blur(8px)}
+.dept .tags span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(11,19,36,.38);backdrop-filter:blur(8px)}
 .dept:not(.ph) .tags span{background:var(--sky2);color:var(--co)}
 .dept .go{position:absolute;right:20px;top:20px;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;transition:.4s var(--ease)}
 .dept:hover .go{background:var(--lime);transform:rotate(-45deg)}
 .dept .go svg{width:18px;height:18px}
 .b1{grid-column:span 7;grid-row:span 2}.b2{grid-column:span 5;grid-row:span 2}
 .b3{grid-column:span 4;grid-row:span 2}.b4{grid-column:span 4;grid-row:span 2}.b5{grid-column:span 4}.b6{grid-column:span 4}
-.dept.co{background:var(--co);color:#fff}
+.dept.co{background:var(--co);color:#fff}.dept:not(.ph):not(.co) .go{background:var(--bg)}
 .dept.co .tags span{background:rgba(255,255,255,.15);color:#fff}
 .dept .big{font-family:var(--disp);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.04em}
 
@@ -174,7 +175,7 @@ nav.gnb a:hover,nav.gnb a.act{background:#fff;color:var(--ink)}
 .tooth.sel path{fill:var(--co);stroke:var(--co2)}
 .tooth.added path{fill:var(--lime);stroke:#9CC21B}
 .tooth.sel.added path{fill:var(--co)}
-.tooth text{font-family:var(--disp);font-size:10px;font-weight:700;fill:var(--ink3);pointer-events:none}
+.tooth text{font-family:var(--disp);font-size:11px;font-weight:700;fill:var(--ink3);pointer-events:none}
 .tooth.sel text{fill:#fff}
 .tm-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:8px}
 .tm-legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
@@ -183,7 +184,7 @@ nav.gnb a:hover,nav.gnb a.act{background:#fff;color:var(--ink)}
 .tm-side .tsub{color:var(--ink3);font-size:14px;font-family:var(--disp);font-weight:700}
 .tm-side h4{font-size:14px;color:var(--ink3);font-weight:700;margin-bottom:10px}
 .chips{display:flex;flex-wrap:wrap;gap:8px}
-.result{background:var(--bg);border-radius:20px;padding:20px}
+.result{background:#fff;border-radius:20px;padding:20px}
 .result .rt{font-weight:800;font-size:18px}
 .result ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:8px}
 .result li{display:flex;gap:10px;font-size:15px;color:var(--ink2)}
@@ -191,7 +192,7 @@ nav.gnb a:hover,nav.gnb a.act{background:#fff;color:var(--ink)}
 .cart{display:flex;flex-wrap:wrap;gap:6px;min-height:34px}
 .cart span{display:inline-flex;align-items:center;gap:6px;background:var(--lime);font-weight:700;font-size:13px;padding:6px 10px;border-radius:999px}
 .cart span button{font-size:14px;line-height:1}
-.empty{color:var(--ink3);font-size:14px}
+.cart span.empty,.empty{color:var(--ink3);font-size:14px;background:none;padding:0;font-weight:500}
 
 /* cost calc */
 .calc{display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:start}
@@ -412,7 +413,10 @@ footer b{color:var(--ink)}
   .tm-map,.tm-side,.wt-sim,.info,.bk,.sum{padding:22px}
   .item{grid-template-columns:1fr auto;padding:14px}
   .item .price{grid-column:1/-1;text-align:left;font-size:15px;min-width:0;margin-top:-6px}
-  .shade-info b{font-size:18px}
+  .shade-info{gap:6px}.shade-info div{padding:12px 10px}.shade-info small{font-size:11.5px}.shade-info b{font-size:15px}
+  .tm-map{padding:12px!important}
+  .monthly{flex-wrap:wrap;gap:4px}.monthly b{font-size:19px}
+  .months button{font-size:12.5px}
   .wt-photo{min-height:420px}
   .docs{grid-template-columns:1fr}
   .times{grid-template-columns:repeat(4,1fr)}
@@ -509,7 +513,7 @@ footer b{color:var(--ink)}
       <div class="art"><svg width="120" height="120" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="44" stroke="#2948FF" stroke-width="3" stroke-dasharray="6 8"/><path d="M42 64c6 8 30 8 36 0" stroke="#2948FF" stroke-width="5" stroke-linecap="round"/><circle cx="46" cy="50" r="5" fill="#2948FF"/><circle cx="74" cy="50" r="5" fill="#2948FF"/></svg></div>
     </article>
     <article class="pcard co">
-      <div><span class="no">02 — 설명 먼저</span><h3>내 치아를 화면으로 보고 결정합니다</h3><p>3D CT와 구강 스캐너로 찍은 내 치아를 모니터에 띄워 원장이 직접 설명합니다. 이해될 때까지 치료를 시작하지 않습니다.</p></div>
+      <div><span class="no">02 — 설명 먼저</span><h3>화면으로 보며 설명합니다</h3><p>3D CT와 구강 스캐너로 찍은 내 치아를 모니터에 띄워 원장이 직접 설명합니다. 이해될 때까지 치료를 시작하지 않습니다.</p></div>
       <div class="art"><svg width="130" height="110" viewBox="0 0 130 110" fill="none"><rect x="8" y="8" width="114" height="76" rx="12" stroke="#fff" stroke-width="3"/><path d="M30 60c8-24 14-24 18 0s10 24 18 0 14-24 18 0 10 24 16 0" stroke="#D9FF5C" stroke-width="4" stroke-linecap="round"/><path d="M45 102h40M65 84v18" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
     </article>
     <article class="pcard lime">
@@ -530,7 +534,7 @@ footer b{color:var(--ink)}
     <p class="lead rv d1" style="max-width:440px">진료과목별 담당 원장이 정해져 있어, 처음 상담한 원장이 치료와 사후 관리까지 이어서 봅니다.</p>
   </div>
   <div class="bento">
-    <a href="#cost" class="dept ph b1 rv" data-cost="implant"><img src="img/implant.jpg" alt="환하게 웃는 중년 여성" loading="lazy" style="object-position:50% 25%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>임플란트</span><span>틀니</span><span>뼈이식</span></div><div><h3>임플란트 센터</h3><p>3D CT로 잇몸뼈를 먼저 확인하고, 만 65세 이상 건강보험 임플란트도 상담해 드립니다.</p></div></a>
+    <a href="#cost" class="dept ph b1 rv" data-cost="implant"><img src="img/implant.jpg" alt="환하게 웃는 중년 여성" loading="lazy" style="object-position:50% 42%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>임플란트</span><span>틀니</span><span>뼈이식</span></div><div><h3>임플란트 센터</h3><p>3D CT로 잇몸뼈를 먼저 확인하고, 만 65세 이상 건강보험 임플란트도 상담해 드립니다.</p></div></a>
     <a href="#cost" class="dept ph b2 rv d1" data-cost="ortho"><img src="img/ortho.jpg" alt="웃고 있는 청년" loading="lazy" style="object-position:50% 20%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>투명교정</span><span>부분교정</span></div><div><h3>교정 센터</h3><p>티 나지 않는 투명교정부터 앞니만 가지런히 하는 부분교정까지.</p></div></a>
     <a href="#white" class="dept ph b3 rv" ><img src="img/whiten.jpg" alt="커피를 들고 웃는 여성" loading="lazy" style="object-position:50% 30%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>미백</span><span>라미네이트</span></div><div><h3>미백 · 심미</h3><p>커피·와인 착색은 전문가 미백으로.</p></div></a>
     <a href="#booking" class="dept ph b4 rv d1"><img src="img/kid.jpg" alt="양치하는 아이" loading="lazy" style="object-position:40% 30%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>불소</span><span>실란트</span></div><div><h3>소아치과</h3><p>처음 치과가 즐거운 기억이 되도록.</p></div></a>
@@ -547,7 +551,7 @@ footer b{color:var(--ink)}
   </div>
   <div class="tm">
     <div class="card tm-map rv" style="background:var(--bg);box-shadow:none">
-      <svg id="teeth" viewBox="0 0 600 560" aria-label="치아 선택 지도"></svg>
+      <svg id="teeth" viewBox="40 28 520 500" aria-label="치아 선택 지도"></svg>
       <div class="tm-legend"><span><i style="background:#fff;border:1px solid #C6CEDE"></i>정상</span><span><i style="background:var(--co)"></i>선택 중</span><span><i style="background:var(--lime)"></i>상담 리스트</span><span style="margin-left:auto;font-family:var(--disp);font-weight:700">↑ 위 · 아래 ↓ · 화면 왼쪽이 내 오른쪽</span></div>
     </div>
     <div class="card tm-side rv d1" style="background:var(--bg);box-shadow:none">
@@ -813,14 +817,14 @@ const SIZE={1:[30,38],2:[27,34],3:[29,38],4:[31,32],5:[31,32],6:[42,38],7:[40,36
 const shapeP=(w,h,t)=>{if(t<=2)return `M${-w/2} ${-h/2+6}Q0 ${-h/2-4} ${w/2} ${-h/2+6}L${w/2-3} ${h/2-6}Q0 ${h/2+4} ${-w/2+3} ${h/2-6}Z`;
   if(t===3)return `M${-w/2} ${-h/2+10}Q0 ${-h/2-8} ${w/2} ${-h/2+10}L${w/2-4} ${h/2-6}Q0 ${h/2+4} ${-w/2+4} ${h/2-6}Z`;
   const r=t>=6?12:10;return `M${-w/2+r} ${-h/2}H${w/2-r}Q${w/2} ${-h/2} ${w/2} ${-h/2+r}V${h/2-r}Q${w/2} ${h/2} ${w/2-r} ${h/2}H${-w/2+r}Q${-w/2} ${h/2} ${-w/2} ${h/2-r}V${-h/2+r}Q${-w/2} ${-h/2} ${-w/2+r} ${-h/2}Z`};
-function arch(order,cx,cy,rx,ry,a0,a1,up){const n=order.length;order.forEach((no,i)=>{const t=(a0+(a1-a0)*(i+.5)/n)*Math.PI/180;const x=cx+rx*Math.cos(t),y=cy+ry*Math.sin(t);const d=no%10;const [w,h]=SIZE[d];const rot=(t*180/Math.PI)+(up?90:-90);
+function arch(order,cx,cy,rx,ry,a0,a1,up){const K=1.12;const tot=order.reduce((s,no)=>s+SIZE[no%10][0],0);let cum=0;order.forEach((no,i)=>{const ww=SIZE[no%10][0];const t=(a0+(a1-a0)*(cum+ww/2)/tot)*Math.PI/180;cum+=ww;const x=cx+rx*Math.cos(t),y=cy+ry*Math.sin(t);const d=no%10;const w=SIZE[d][0]*K,h=SIZE[d][1]*K;const rot=(t*180/Math.PI)+(up?90:-90);
   const g=document.createElementNS(NS,'g');g.setAttribute('class','tooth');g.dataset.no=no;g.setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)})`);g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',`${no}번 ${QN[Math.floor(no/10)]} ${DN[d]}`);
   const p=document.createElementNS(NS,'path');p.setAttribute('d',shapeP(w,h,d));g.appendChild(p);
   const tx=document.createElementNS(NS,'text');tx.setAttribute('text-anchor','middle');tx.setAttribute('dy','4');tx.setAttribute('transform',`rotate(${-rot.toFixed(1)})`);tx.textContent=no;g.appendChild(tx);svg.appendChild(g)})}
-arch([18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28],300,262,238,200,188,352,true);
-arch([48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38],300,298,226,196,172,8,false);
+arch([18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28],300,272,212,206,190,350,true);
+arch([48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38],300,292,200,198,170,10,false);
 const lab=(x,y,t)=>{const e=document.createElementNS(NS,'text');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('text-anchor','middle');e.setAttribute('style','font:800 13px Bricolage Grotesque,sans-serif;fill:#8A93A6;letter-spacing:.12em');e.textContent=t;svg.appendChild(e)};
-lab(300,190,'UPPER');lab(300,385,'LOWER');lab(70,285,'R');lab(530,285,'L');
+lab(300,200,'UPPER');lab(300,390,'LOWER');lab(66,290,'R');lab(534,290,'L');
 const SYM=[['cold','찬물에 시려요'],['bite','씹을 때 아파요'],['night','밤에 욱신거려요'],['loose','흔들려요'],['broken','깨지거나 금 갔어요'],['gum','잇몸이 부었어요'],['missing','빠지고 없어요'],['color','색이 변했어요']];
 const symBox=$('#symp');SYM.forEach(([k,l])=>{const b=document.createElement('button');b.className='chip';b.dataset.k=k;b.textContent=l;b.setAttribute('aria-pressed','false');b.onclick=()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');renderRes()};symBox.appendChild(b)});
 let cur=36;const cart=new Set(JSON.parse(localStorage.getItem('onyu-teeth')||'[]'));
