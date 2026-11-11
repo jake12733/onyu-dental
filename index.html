@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>온유치과 · 덜 아프게, 더 오래 내 치아로 | Owen Web Concept</title>
+<meta name="description" content="치과가 무서운 사람을 위한 치과, 온유치과. 내 치아 찾기, 예상 비용 계산, 미백 시뮬레이션, 실시간 예약까지 한 번에.">
+<meta name="theme-color" content="#2948FF">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F2F4F8; --card:#FFFFFF; --ink:#0B1324; --ink2:#4B5567; --ink3:#8A93A6;
+  --co:#2948FF; --co2:#1B30C9; --sky:#E4E9FF; --sky2:#F1F4FF; --lime:#D9FF5C; --mint:#2CD3A4; --red:#FF5A5F;
+  --line:rgba(11,19,36,.08); --r:28px; --r2:20px;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+  --disp:'Bricolage Grotesque','Pretendard Variable',sans-serif;
+  --ease:cubic-bezier(.2,.7,.2,1);
+  --sh:0 1px 2px rgba(11,19,36,.04),0 12px 32px -12px rgba(11,19,36,.12);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+html,body{overflow-x:clip}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);line-height:1.6;letter-spacing:-.01em;-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+input,select,textarea{font:inherit;color:inherit}
+.wrap{width:min(1240px,100% - 48px);margin-inline:auto}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:var(--disp);font-weight:700;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--co)}
+.eyebrow::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--co)}
+.h2{font-size:clamp(32px,4.4vw,56px);line-height:1.15;font-weight:800;letter-spacing:-.035em;margin-top:14px}
+.h2 em{font-style:normal;color:var(--co)}
+.lead{font-size:clamp(16px,1.35vw,18px);color:var(--ink2);margin-top:16px;max-width:620px}
+.sec{padding:120px 0}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;flex-wrap:wrap;margin-bottom:48px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 26px;border-radius:999px;font-weight:700;font-size:16px;transition:transform .3s var(--ease),background .3s,box-shadow .3s;white-space:nowrap}
+.btn-co{background:var(--co);color:#fff;box-shadow:0 10px 24px -10px rgba(41,72,255,.7)}
+.btn-co:hover{background:var(--co2);transform:translateY(-2px)}
+.btn-ghost{background:#fff;border:1px solid var(--line)}
+.btn-ghost:hover{transform:translateY(-2px);box-shadow:var(--sh)}
+.btn-ink{background:var(--ink);color:#fff}
+.btn svg{width:18px;height:18px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:14px;font-weight:600;transition:.25s}
+.chip.on,.chip[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.card{background:var(--card);border-radius:var(--r);box-shadow:var(--sh)}
+.rv{opacity:0;transform:translateY(36px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+.rv.in{opacity:1;transform:none}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+#prog{position:fixed;left:0;top:0;height:3px;width:0;background:linear-gradient(90deg,var(--co),var(--mint));z-index:200}
+
+/* top bar */
+.topbar{background:var(--ink);color:#fff;font-size:13px}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;height:40px;gap:16px}
+.live{display:inline-flex;align-items:center;gap:8px;font-weight:600}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 0 0 rgba(44,211,164,.6);animation:pulse 2s infinite}
+.dot.off{background:#FF8A65;animation:none}
+@keyframes pulse{70%{box-shadow:0 0 0 8px rgba(44,211,164,0)}100%{box-shadow:0 0 0 0 rgba(44,211,164,0)}}
+.topbar .demo{opacity:.6;font-family:var(--disp);letter-spacing:.04em}
+
+/* header */
+header{position:sticky;top:0;z-index:100;transition:.35s var(--ease)}
+header .bar{display:flex;align-items:center;justify-content:space-between;height:76px;gap:24px}
+header.sc{background:rgba(242,244,248,.82);backdrop-filter:saturate(1.4) blur(16px);-webkit-backdrop-filter:saturate(1.4) blur(16px);box-shadow:0 1px 0 var(--line)}
+.logo{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:-.03em}
+.logo svg{width:36px;height:36px}
+.logo small{display:block;font-family:var(--disp);font-size:10px;letter-spacing:.18em;color:var(--ink3);font-weight:700;margin-top:-3px}
+nav.gnb{display:flex;gap:4px}
+nav.gnb a{padding:10px 14px;border-radius:999px;font-weight:600;font-size:15px;color:var(--ink2);transition:.2s}
+nav.gnb a:hover,nav.gnb a.act{background:#fff;color:var(--ink)}
+.hd-cta{display:flex;align-items:center;gap:10px}
+.hd-cta .tel{font-family:var(--disp);font-weight:700;font-size:15px}
+.hd-cta .btn{height:46px;padding:0 20px;font-size:15px}
+.burger{display:none;width:46px;height:46px;border-radius:50%;background:#fff;align-items:center;justify-content:center}
+.burger span{width:18px;height:2px;background:var(--ink);position:relative;display:block}
+.burger span::before,.burger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
+.burger span::before{top:-6px}.burger span::after{top:6px}
+.mnav{position:fixed;inset:0;background:var(--bg);z-index:150;padding:100px 24px 40px;display:flex;flex-direction:column;gap:6px;transform:translateY(-100%);transition:.5s var(--ease)}
+.mnav.open{transform:none}
+.mnav a{font-size:28px;font-weight:800;padding:10px 0;border-bottom:1px solid var(--line)}
+.mnav .x{position:absolute;right:24px;top:28px;width:46px;height:46px;border-radius:50%;background:#fff;font-size:22px}
+
+/* hero */
+.hero{padding:28px 0 40px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:20px}
+.hero-main{padding:56px 52px;display:flex;flex-direction:column;justify-content:space-between;min-height:640px;position:relative;overflow:hidden}
+.hero-main .tag{display:inline-flex;align-items:center;gap:8px;background:var(--sky2);color:var(--co);font-weight:700;font-size:14px;padding:8px 14px;border-radius:999px;align-self:flex-start}
+.hero h1{font-size:clamp(40px,5.6vw,80px);line-height:1.08;letter-spacing:-.045em;font-weight:800;margin-top:28px}
+.hero h1 .hl{position:relative;display:inline-block;color:var(--co)}
+.hero h1 .hl svg{position:absolute;left:-2%;bottom:-.08em;width:104%;height:.32em}
+.hero h1 .hl path{stroke-dasharray:400;stroke-dashoffset:400;animation:draw 1.4s .6s var(--ease) forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.hero p.sub{font-size:clamp(16px,1.4vw,19px);color:var(--ink2);margin-top:24px;max-width:520px}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:36px}
+.hero-feat{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:44px}
+.hero-feat div{background:var(--bg);border-radius:18px;padding:16px}
+.hero-feat b{display:block;font-size:15px}
+.hero-feat span{font-size:13px;color:var(--ink3)}
+.hero-pic{position:relative;border-radius:var(--r);overflow:hidden;min-height:640px;background:#ddd}
+.hero-pic img{position:absolute;inset:0;width:100%;height:115%;object-fit:cover;object-position:50% 20%;will-change:transform}
+.float{position:absolute;background:rgba(255,255,255,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-radius:18px;padding:14px 16px;box-shadow:0 20px 40px -18px rgba(11,19,36,.35);font-size:14px;animation:bob 6s ease-in-out infinite}
+.float b{display:block;font-size:15px}
+.float small{color:var(--ink3);font-size:12px}
+.f1{left:20px;top:24px}
+.f2{right:20px;top:44%;animation-delay:-2s}
+.f3{left:20px;bottom:24px;right:20px;display:flex;align-items:center;justify-content:space-between;gap:12px;animation:none}
+.f3 .bars{display:flex;gap:4px;align-items:flex-end;height:28px}
+.f3 .bars i{width:6px;border-radius:3px;background:var(--sky)}
+.f3 .bars i.on{background:var(--co)}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.ico{width:36px;height:36px;border-radius:12px;background:var(--sky2);display:inline-grid;place-items:center;color:var(--co);flex:none}
+.ico svg{width:20px;height:20px}
+.f1,.f2{display:flex;gap:10px;align-items:center}
+
+/* marquee */
+.mq{overflow:hidden;padding:22px 0;border-block:1px solid var(--line);margin-top:20px}
+.mq-in{display:flex;gap:48px;width:max-content;animation:mq 38s linear infinite}
+.mq span{font-family:var(--disp);font-weight:800;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.02em;display:flex;align-items:center;gap:48px;white-space:nowrap}
+.mq span::after{content:"";width:14px;height:14px;border-radius:50%;background:var(--lime);box-shadow:inset 0 0 0 3px var(--ink)}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* promise stack */
+.promise{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+.promise .sticky{position:sticky;top:120px;align-self:start}
+.stack{display:flex;flex-direction:column;gap:24px}
+.pcard{position:sticky;padding:40px;border-radius:var(--r);background:#fff;box-shadow:var(--sh);min-height:300px;display:grid;grid-template-columns:1fr 200px;gap:28px;align-items:center;transform-origin:center top;transition:transform .2s linear}
+.pcard:nth-child(1){top:110px}.pcard:nth-child(2){top:130px}.pcard:nth-child(3){top:150px}.pcard:nth-child(4){top:170px}
+.pcard .no{font-family:var(--disp);font-weight:800;font-size:15px;color:var(--co)}
+.pcard h3{font-size:clamp(24px,2.4vw,32px);letter-spacing:-.03em;margin-top:10px;line-height:1.25}
+.pcard p{color:var(--ink2);margin-top:12px}
+.pcard .art{aspect-ratio:1;border-radius:22px;background:var(--sky2);display:grid;place-items:center;overflow:hidden}
+.pcard.dark{background:var(--ink);color:#fff}
+.pcard.dark p{color:#B9C1D3}
+.pcard.dark .art{background:#18233B}
+.pcard.co{background:var(--co);color:#fff}
+.pcard.co p{color:#DCE2FF}.pcard.co .no{color:var(--lime)}
+.pcard.co .art{background:rgba(255,255,255,.12)}
+.pcard.lime{background:var(--lime)}
+.pcard.lime .no{color:var(--ink)}
+.pcard.lime .art{background:rgba(11,19,36,.06)}
+
+/* departments bento */
+.bento{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:220px;gap:16px}
+.dept{position:relative;border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--sh);padding:26px;display:flex;flex-direction:column;justify-content:space-between;isolation:isolate;transition:transform .5s var(--ease)}
+.dept:hover{transform:translateY(-4px)}
+.dept img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;transition:transform 1.2s var(--ease)}
+.dept:hover img{transform:scale(1.05)}
+.dept.ph::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(11,19,36,0) 35%,rgba(11,19,36,.78))}
+.dept.ph{color:#fff}
+.dept h3{font-size:clamp(22px,2vw,28px);letter-spacing:-.03em;line-height:1.2}
+.dept p{font-size:14px;opacity:.85;margin-top:6px;max-width:340px}
+.dept .tags{display:flex;gap:6px;flex-wrap:wrap}
+.dept .tags span{font-size:12px;font-weight:700;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.18);backdrop-filter:blur(8px)}
+.dept:not(.ph) .tags span{background:var(--sky2);color:var(--co)}
+.dept .go{position:absolute;right:20px;top:20px;width:40px;height:40px;border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;transition:.4s var(--ease)}
+.dept:hover .go{background:var(--lime);transform:rotate(-45deg)}
+.dept .go svg{width:18px;height:18px}
+.b1{grid-column:span 7;grid-row:span 2}.b2{grid-column:span 5;grid-row:span 2}
+.b3{grid-column:span 4;grid-row:span 2}.b4{grid-column:span 4;grid-row:span 2}.b5{grid-column:span 4}.b6{grid-column:span 4}
+.dept.co{background:var(--co);color:#fff}
+.dept.co .tags span{background:rgba(255,255,255,.15);color:#fff}
+.dept .big{font-family:var(--disp);font-weight:800;font-size:56px;line-height:1;letter-spacing:-.04em}
+
+/* tooth map */
+.tm{display:grid;grid-template-columns:1.1fr .9fr;gap:20px}
+.tm-map{padding:32px;position:relative}
+.tm-map svg{width:100%;height:auto;display:block;user-select:none}
+.tooth{cursor:pointer}
+.tooth path{fill:#fff;stroke:#C6CEDE;stroke-width:1.5;transition:fill .25s,stroke .25s,transform .25s}
+.tooth:hover path{fill:var(--sky)}
+.tooth.sel path{fill:var(--co);stroke:var(--co2)}
+.tooth.added path{fill:var(--lime);stroke:#9CC21B}
+.tooth.sel.added path{fill:var(--co)}
+.tooth text{font-family:var(--disp);font-size:10px;font-weight:700;fill:var(--ink3);pointer-events:none}
+.tooth.sel text{fill:#fff}
+.tm-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--ink2);margin-top:8px}
+.tm-legend i{display:inline-block;width:12px;height:12px;border-radius:4px;margin-right:6px;vertical-align:-1px}
+.tm-side{padding:32px;display:flex;flex-direction:column;gap:18px}
+.tm-side .tname{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.25}
+.tm-side .tsub{color:var(--ink3);font-size:14px;font-family:var(--disp);font-weight:700}
+.tm-side h4{font-size:14px;color:var(--ink3);font-weight:700;margin-bottom:10px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.result{background:var(--bg);border-radius:20px;padding:20px}
+.result .rt{font-weight:800;font-size:18px}
+.result ul{list-style:none;margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.result li{display:flex;gap:10px;font-size:15px;color:var(--ink2)}
+.result li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--co);margin-top:10px}
+.cart{display:flex;flex-wrap:wrap;gap:6px;min-height:34px}
+.cart span{display:inline-flex;align-items:center;gap:6px;background:var(--lime);font-weight:700;font-size:13px;padding:6px 10px;border-radius:999px}
+.cart span button{font-size:14px;line-height:1}
+.empty{color:var(--ink3);font-size:14px}
+
+/* cost calc */
+.calc{display:grid;grid-template-columns:1.25fr .75fr;gap:20px;align-items:start}
+.items{padding:12px}
+.item{display:grid;grid-template-columns:1fr auto auto;gap:16px;align-items:center;padding:18px 20px;border-radius:20px;transition:.2s}
+.item:hover{background:var(--bg)}
+.item b{font-size:17px}
+.item .ins{display:inline-block;font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;background:var(--sky2);color:var(--co);margin-left:6px;vertical-align:2px}
+.item small{display:block;color:var(--ink3);font-size:13px}
+.item .price{font-family:var(--disp);font-weight:700;font-size:17px;text-align:right;min-width:110px}
+.step{display:flex;align-items:center;gap:4px;background:var(--bg);border-radius:999px;padding:4px}
+.step button{width:34px;height:34px;border-radius:50%;background:#fff;font-size:18px;font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.step output{min-width:24px;text-align:center;font-weight:800}
+.sum{padding:32px;position:sticky;top:110px;background:var(--ink);color:#fff}
+.sum h4{font-size:14px;color:#9AA4BA;font-weight:600}
+.sum .total{font-family:var(--disp);font-weight:800;font-size:clamp(40px,4vw,54px);letter-spacing:-.04em;line-height:1.1;margin-top:6px}
+.sum .total small{font-size:20px;margin-left:4px}
+.sum .row{display:flex;justify-content:space-between;font-size:14px;color:#B9C1D3;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.08)}
+.sum .row b{color:#fff}
+.toggle{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 0}
+.sw{position:relative;width:52px;height:30px;border-radius:999px;background:#2A3550;transition:.3s;flex:none}
+.sw::after{content:"";position:absolute;left:4px;top:4px;width:22px;height:22px;border-radius:50%;background:#fff;transition:.3s var(--ease)}
+.sw[aria-checked="true"]{background:var(--co)}
+.sw[aria-checked="true"]::after{transform:translateX(22px)}
+.months{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:10px}
+.months button{height:40px;border-radius:12px;background:#18233B;font-weight:700;font-size:14px}
+.months button.on{background:var(--lime);color:var(--ink)}
+.monthly{margin-top:18px;background:#18233B;border-radius:18px;padding:16px 18px;display:flex;justify-content:space-between;align-items:center}
+.monthly b{font-family:var(--disp);font-size:24px}
+.note{font-size:12.5px;color:var(--ink3);margin-top:16px;line-height:1.6}
+.sum .note{color:#7D879C}
+
+/* whitening */
+.wt{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.wt-sim{padding:36px;display:flex;flex-direction:column;gap:24px}
+.smile-wrap{position:relative;border-radius:24px;overflow:hidden;background:linear-gradient(180deg,#FBE3DC,#F4CFC6);aspect-ratio:16/9;touch-action:none}
+.smile-wrap svg{position:absolute;inset:0;width:100%;height:100%}
+.smile-after{clip-path:inset(0 0 0 50%)}
+.handle{position:absolute;top:0;bottom:0;left:50%;width:3px;background:#fff;transform:translateX(-50%);cursor:ew-resize}
+.handle::after{content:"⟷";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:44px;height:44px;border-radius:50%;background:#fff;display:grid;place-items:center;font-weight:800;color:var(--co);box-shadow:0 8px 20px -6px rgba(0,0,0,.3)}
+.lbl{position:absolute;top:14px;font-family:var(--disp);font-weight:800;font-size:12px;letter-spacing:.08em;background:rgba(255,255,255,.85);padding:6px 10px;border-radius:999px}
+.lbl.l{left:14px}.lbl.r{right:14px;background:var(--co);color:#fff}
+.shade-bar{display:grid;grid-template-columns:repeat(16,1fr);gap:3px}
+.shade-bar button{aspect-ratio:1/1.6;border-radius:8px;border:2px solid transparent;position:relative}
+.shade-bar button.cur{border-color:var(--ink)}
+.shade-bar button.goal{border-color:var(--co);box-shadow:0 0 0 3px var(--sky)}
+.shade-info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.shade-info div{background:var(--bg);border-radius:18px;padding:14px 16px}
+.shade-info small{color:var(--ink3);font-size:12.5px;font-weight:700}
+.shade-info b{display:block;font-family:var(--disp);font-size:22px;margin-top:2px}
+.range{width:100%;accent-color:var(--co)}
+.wt-photo{position:relative;border-radius:var(--r);overflow:hidden;min-height:520px}
+.wt-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 25%}
+.wt-photo .cap{position:absolute;left:20px;right:20px;bottom:20px;background:rgba(255,255,255,.92);backdrop-filter:blur(10px);border-radius:22px;padding:22px}
+.wt-photo .cap b{font-size:20px;letter-spacing:-.02em}
+.wt-photo .cap p{color:var(--ink2);font-size:14.5px;margin-top:6px}
+
+/* process horizontal */
+.proc{height:340vh;position:relative}
+.proc-pin{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;justify-content:center}
+.proc-track{display:flex;gap:20px;padding-left:max(24px,(100vw - 1240px)/2);will-change:transform}
+.pstep{flex:none;width:min(520px,78vw);height:min(560px,64vh);border-radius:var(--r);overflow:hidden;position:relative;background:#fff;box-shadow:var(--sh);display:flex;flex-direction:column}
+.pstep .pimg{flex:1;position:relative;overflow:hidden}
+.pstep .pimg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.pstep .pbody{padding:26px 28px}
+.pstep .pn{font-family:var(--disp);font-weight:800;color:var(--co);font-size:14px}
+.pstep h3{font-size:24px;letter-spacing:-.03em;margin-top:4px}
+.pstep p{color:var(--ink2);font-size:15px;margin-top:6px}
+.pstep.intro{background:var(--co);color:#fff;justify-content:space-between;padding:36px}
+.pstep.intro h3{font-size:clamp(30px,3vw,44px);line-height:1.15}
+.pstep.intro p{color:#DCE2FF;font-size:16px}
+.proc-bar{width:min(1240px,100% - 48px);margin:28px auto 0;height:4px;border-radius:4px;background:#DDE2EC;overflow:hidden}
+.proc-bar i{display:block;height:100%;width:0;background:var(--co)}
+
+/* doctors */
+.docs{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.doc{border-radius:var(--r);overflow:hidden;background:#fff;box-shadow:var(--sh)}
+.doc .dp{position:relative;aspect-ratio:4/4.6;background:var(--co);overflow:hidden}
+.doc .dp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 12%;filter:grayscale(1) contrast(1.12) brightness(1.08);mix-blend-mode:screen;transition:filter .7s var(--ease),transform 1.2s var(--ease)}
+.doc:hover .dp img{filter:none;mix-blend-mode:normal;transform:scale(1.04)}
+.doc .role{position:absolute;left:16px;top:16px;background:var(--lime);color:var(--ink);font-weight:800;font-size:12px;padding:6px 10px;border-radius:999px}
+.doc .db{padding:24px 26px 28px}
+.doc h3{font-size:24px;letter-spacing:-.03em;display:flex;align-items:baseline;gap:8px}
+.doc h3 small{font-size:14px;color:var(--ink3);font-weight:600}
+.doc .sp{font-weight:700;color:var(--co);font-size:14px;margin-top:2px}
+.doc q{display:block;margin-top:14px;font-size:15.5px;color:var(--ink);quotes:"“" "”";line-height:1.55}
+.doc ul{list-style:none;margin-top:16px;border-top:1px solid var(--line);padding-top:14px;display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--ink2)}
+
+/* gallery */
+.gal{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 24px 24px max(24px,(100vw - 1240px)/2);scrollbar-width:none;cursor:grab}
+.gal::-webkit-scrollbar{display:none}
+.gal figure{flex:none;width:min(420px,76vw);scroll-snap-align:start}
+.gal .gi{aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
+.gal img{width:100%;height:100%;object-fit:cover;pointer-events:none}
+.gal figcaption{display:flex;justify-content:space-between;margin-top:12px;font-weight:700}
+.gal figcaption span{color:var(--ink3);font-family:var(--disp);font-size:14px}
+
+/* faq */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:56px}
+.qa{border-bottom:1px solid var(--line)}
+.qa button{width:100%;display:flex;justify-content:space-between;align-items:center;gap:16px;text-align:left;padding:24px 0;font-size:18px;font-weight:700;letter-spacing:-.02em}
+.qa .pm{width:32px;height:32px;border-radius:50%;background:#fff;flex:none;display:grid;place-items:center;transition:.3s var(--ease);box-shadow:var(--sh)}
+.qa.open .pm{transform:rotate(45deg);background:var(--co);color:#fff}
+.qa .ans{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+.qa.open .ans{grid-template-rows:1fr}
+.qa .ans>div{overflow:hidden}
+.qa .ans p{padding:0 48px 24px 0;color:var(--ink2)}
+
+/* booking */
+.book{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px;align-items:start}
+.info{padding:34px;display:flex;flex-direction:column;gap:22px}
+.hours{width:100%;border-collapse:collapse;font-size:15px}
+.hours td{padding:11px 0;border-bottom:1px solid var(--line)}
+.hours td:last-child{text-align:right;font-family:var(--disp);font-weight:700}
+.hours tr.today td{color:var(--co);font-weight:800}
+.hours tr.today td:first-child::after{content:"오늘";font-size:11px;background:var(--co);color:#fff;border-radius:999px;padding:2px 7px;margin-left:8px;vertical-align:2px;font-weight:800}
+.map{position:relative;border-radius:22px;overflow:hidden;background:#E6EAF2;aspect-ratio:16/10}
+.map svg{width:100%;height:100%;display:block}
+.bk{padding:34px}
+.steps{display:flex;gap:8px;margin-bottom:26px}
+.steps span{flex:1;height:6px;border-radius:6px;background:var(--bg);overflow:hidden;position:relative}
+.steps span.on::after{content:"";position:absolute;inset:0;background:var(--co);animation:fill .5s var(--ease)}
+@keyframes fill{from{transform:translateX(-100%)}}
+.pane{display:none}
+.pane.on{display:block;animation:fade .45s var(--ease)}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}}
+.pane h3{font-size:24px;letter-spacing:-.03em;margin-bottom:6px}
+.pane .hint{color:var(--ink3);font-size:14px;margin-bottom:18px}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.days button{border-radius:14px;padding:10px 0;background:var(--bg);display:flex;flex-direction:column;align-items:center;gap:2px;font-weight:700;transition:.2s}
+.days button small{font-size:11px;color:var(--ink3);font-weight:600}
+.days button:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.days button.on{background:var(--co);color:#fff}
+.days button.on small{color:#DCE2FF}
+.times{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-top:18px}
+.times button{height:44px;border-radius:12px;background:var(--bg);font-weight:700;font-family:var(--disp);font-size:15px}
+.times button:disabled{opacity:.35;cursor:not-allowed;text-decoration:line-through}
+.times button.on{background:var(--ink);color:#fff}
+.fld{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.fld label{font-size:13px;font-weight:700;color:var(--ink2)}
+.fld input,.fld textarea{height:52px;border-radius:14px;border:1px solid var(--line);background:var(--bg);padding:0 16px;outline:none;transition:.2s}
+.fld textarea{height:90px;padding:14px 16px;resize:none}
+.fld input:focus,.fld textarea:focus{border-color:var(--co);background:#fff;box-shadow:0 0 0 4px var(--sky2)}
+.fld .err{color:var(--red);font-size:12.5px;display:none}
+.fld.bad input{border-color:var(--red)}
+.fld.bad .err{display:block}
+.agree{display:flex;gap:10px;align-items:flex-start;font-size:13.5px;color:var(--ink2);margin:6px 0 18px}
+.agree input{width:18px;height:18px;accent-color:var(--co);margin-top:2px}
+.nav-btns{display:flex;justify-content:space-between;gap:10px;margin-top:24px}
+.summary{background:var(--bg);border-radius:18px;padding:16px 18px;font-size:14.5px;display:flex;flex-direction:column;gap:6px;margin-bottom:18px}
+.summary div{display:flex;justify-content:space-between;gap:12px}
+.summary span{color:var(--ink3)}
+.done{display:grid;grid-template-columns:1fr 240px;gap:24px;align-items:center}
+.ticket{background:var(--co);color:#fff;border-radius:24px;padding:24px;position:relative}
+.ticket small{color:#DCE2FF;font-weight:600}
+.ticket .no{font-family:var(--disp);font-weight:800;font-size:28px;letter-spacing:.02em;margin:4px 0 14px}
+.ticket .tl{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-top:1px dashed rgba(255,255,255,.3)}
+.phone{width:240px;height:440px;border-radius:38px;background:var(--ink);padding:10px;box-shadow:0 30px 60px -20px rgba(11,19,36,.5)}
+.phone .scr{height:100%;border-radius:30px;background:#ABC1D1;padding:46px 12px 12px;display:flex;flex-direction:column;gap:8px;overflow:hidden;position:relative}
+.phone .scr::before{content:"";position:absolute;top:10px;left:50%;transform:translateX(-50%);width:70px;height:20px;border-radius:12px;background:var(--ink)}
+.kk-name{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#334}
+.kk-name i{width:24px;height:24px;border-radius:9px;background:var(--co);display:grid;place-items:center;color:#fff;font-style:normal;font-size:12px}
+.kk{background:#fff;border-radius:4px 14px 14px 14px;font-size:11px;line-height:1.55;overflow:hidden;opacity:0;transform:translateY(10px);animation:pop .5s .5s var(--ease) forwards}
+.kk .kh{background:#FEE500;padding:8px 10px;font-weight:800;font-size:11.5px}
+.kk .kb{padding:10px}
+.kk .kbtn{margin:0 10px 10px;background:#F2F3F5;border-radius:6px;text-align:center;padding:7px;font-weight:700}
+@keyframes pop{to{opacity:1;transform:none}}
+.mybk{margin-top:26px;border-top:1px solid var(--line);padding-top:20px}
+.mybk h4{font-size:15px;margin-bottom:10px}
+.mybk .bi{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--bg);border-radius:14px;padding:12px 14px;font-size:14px;margin-bottom:6px}
+.mybk .bi button{font-size:13px;color:var(--red);font-weight:700}
+
+/* cta band + footer */
+.band{background:var(--co);color:#fff;border-radius:36px;padding:64px;display:flex;justify-content:space-between;align-items:center;gap:32px;position:relative;overflow:hidden}
+.band h2{font-size:clamp(30px,3.6vw,48px);letter-spacing:-.04em;line-height:1.15}
+.band .btn-ghost{background:var(--lime);border:0;color:var(--ink)}
+.band .ring{position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;border:56px solid rgba(255,255,255,.08)}
+footer{padding:64px 0 120px;color:var(--ink2);font-size:14px}
+footer .fg{display:flex;justify-content:space-between;gap:32px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:32px}
+footer b{color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:100px;transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:14px 20px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:.4s var(--ease);z-index:300;max-width:90vw;text-align:center}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.mbar{display:none}
+
+/* responsive */
+@media (max-width:1100px){
+  nav.gnb{display:none}.burger{display:flex}.hd-cta .tel{display:none}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-main{min-height:auto;padding:44px 32px}
+  .hero-pic{min-height:520px}
+  .promise,.faq{grid-template-columns:1fr;gap:32px}
+  .promise .sticky{position:static}
+  .tm,.calc,.wt,.book{grid-template-columns:1fr}
+  .sum{position:static}
+  .b1,.b2{grid-column:span 12}.b3,.b4{grid-column:span 6}.b5,.b6{grid-column:span 6}
+  .docs{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:760px){
+  .wrap{width:calc(100% - 32px)}
+  .sec{padding:84px 0}
+  .topbar .demo{display:none}
+  header .bar{height:64px}
+  .hd-cta .btn{display:none}
+  .hero{padding-top:16px}
+  .hero-main{padding:32px 22px}
+  .hero h1{font-size:clamp(36px,10.5vw,52px)}
+  .hero-feat{grid-template-columns:1fr 1fr 1fr;gap:6px}
+  .hero-feat div{padding:12px 10px}.hero-feat b{font-size:13px}.hero-feat span{font-size:11.5px}
+  .hero-pic{min-height:440px}
+  .f2{display:none}
+  .btn{height:52px;padding:0 20px;font-size:15px}
+  .hero-cta .btn{flex:1}
+  .pcard{grid-template-columns:1fr;padding:28px;min-height:auto}
+  .pcard .art{display:none}
+  .bento{grid-auto-rows:180px;gap:12px}
+  .b1,.b2,.b3,.b4,.b5,.b6{grid-column:span 12}
+  .b1,.b2{grid-row:span 2}.b3,.b4{grid-row:span 2}
+  .tm-map,.tm-side,.wt-sim,.info,.bk,.sum{padding:22px}
+  .item{grid-template-columns:1fr auto;padding:14px}
+  .item .price{grid-column:1/-1;text-align:left;font-size:15px;min-width:0;margin-top:-6px}
+  .shade-info b{font-size:18px}
+  .wt-photo{min-height:420px}
+  .docs{grid-template-columns:1fr}
+  .times{grid-template-columns:repeat(4,1fr)}
+  .done{grid-template-columns:1fr}
+  .phone{margin:0 auto}
+  .band{padding:40px 26px;flex-direction:column;align-items:flex-start;border-radius:28px}
+  .qa button{font-size:16px}
+  .proc{height:auto}
+  .proc-pin{position:static;height:auto;padding:84px 0 0}
+  .proc-track{transform:none!important;overflow-x:auto;scroll-snap-type:x mandatory;padding-right:16px;scrollbar-width:none}
+  .proc-track::-webkit-scrollbar{display:none}
+  .pstep{scroll-snap-align:start;height:480px}
+  .proc-bar{display:none}
+  .mbar{position:fixed;left:12px;right:12px;bottom:12px;z-index:120;display:grid;grid-template-columns:1fr 1fr 1.4fr;gap:6px;background:rgba(11,19,36,.92);backdrop-filter:blur(12px);border-radius:22px;padding:6px;padding-bottom:calc(6px + env(safe-area-inset-bottom)/2)}
+  .mbar a{height:50px;border-radius:16px;display:flex;align-items:center;justify-content:center;gap:6px;color:#fff;font-weight:700;font-size:14px}
+  .mbar a.p{background:var(--co)}
+  .mbar svg{width:18px;height:18px}
+  footer{padding-bottom:110px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<div class="topbar"><div class="wrap">
+  <span class="live"><i class="dot" id="liveDot"></i><span id="liveTxt">진료 시간 확인 중</span></span>
+  <span class="demo">PORTFOLIO CONCEPT · OWEN WEB</span>
+</div></div>
+
+<header id="hd"><div class="wrap bar">
+  <a href="#top" class="logo" aria-label="온유치과 홈">
+    <svg viewBox="0 0 40 40" fill="none"><rect width="40" height="40" rx="12" fill="#2948FF"/><path d="M12 14.5c0-3 2.4-4.5 4.6-4.5 1.5 0 2.3.7 3.4.7s1.9-.7 3.4-.7c2.2 0 4.6 1.5 4.6 4.5 0 3.2-1.2 5.3-1.9 8.6-.6 3-1 6.9-2.9 6.9-1.8 0-1.6-5.2-3.2-5.2s-1.4 5.2-3.2 5.2c-1.9 0-2.3-3.9-2.9-6.9-.7-3.3-1.9-5.4-1.9-8.6Z" fill="#fff"/><path d="M16 16.5c1.2 1.3 2.6 1.9 4 1.9s2.8-.6 4-1.9" stroke="#2948FF" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span>온유치과<small>ONYU DENTAL</small></span>
+  </a>
+  <nav class="gnb" aria-label="주요 메뉴">
+    <a href="#dept">진료과목</a><a href="#tooth">내 치아 찾기</a><a href="#cost">예상 비용</a><a href="#white">미백 시뮬레이션</a><a href="#doctors">의료진</a><a href="#booking">오시는 길</a>
+  </nav>
+  <div class="hd-cta">
+    <a class="tel" href="tel:020000000">02-000-0000</a>
+    <a href="#booking" class="btn btn-co">진료 예약 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+    <button class="burger" id="burger" aria-label="메뉴 열기"><span></span></button>
+  </div>
+</div></header>
+
+<div class="mnav" id="mnav" aria-hidden="true">
+  <button class="x" id="mclose" aria-label="메뉴 닫기">✕</button>
+  <a href="#dept">진료과목</a><a href="#tooth">내 치아 찾기</a><a href="#cost">예상 비용</a><a href="#white">미백 시뮬레이션</a><a href="#doctors">의료진</a><a href="#booking">예약 · 오시는 길</a>
+</div>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero"><div class="wrap">
+  <div class="hero-grid">
+    <div class="card hero-main rv">
+      <div>
+        <span class="tag">🦷 치과가 무서운 사람을 위한 치과</span>
+        <h1>덜 아프게,<br>더 오래<br><span class="hl">내 치아로.<svg viewBox="0 0 300 30" preserveAspectRatio="none"><path d="M4 22C70 8 170 6 296 16" stroke="#D9FF5C" stroke-width="10" fill="none" stroke-linecap="round"/></svg></span></h1>
+        <p class="sub">마취가 들어가는 순간까지 신경 씁니다. 온유치과는 무통 마취와 충분한 설명, 꼭 필요한 치료만으로 치과 가는 날의 긴장을 덜어드립니다.</p>
+        <div class="hero-cta">
+          <a href="#booking" class="btn btn-co">30초 만에 진료 예약 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          <a href="#tooth" class="btn btn-ghost">아픈 치아 먼저 찾아보기</a>
+        </div>
+      </div>
+      <div class="hero-feat">
+        <div><b>무통 마취기</b><span>바늘 통증 최소화</span></div>
+        <div><b>1인 진료실</b><span>소리·시선 걱정 없이</span></div>
+        <div><b>목요일 야간</b><span>퇴근 후 21시까지</span></div>
+      </div>
+    </div>
+    <div class="hero-pic rv d1">
+      <img src="img/hero.jpg" alt="밝게 웃는 여성" id="heroImg" fetchpriority="high">
+      <div class="float f1"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v3M12 18v3M4.2 7.5l2.6 1.5M17.2 15l2.6 1.5M4.2 16.5l2.6-1.5M17.2 9l2.6-1.5"/><circle cx="12" cy="12" r="3.2"/></svg></span><div><b>표면 마취 먼저</b><small>주사 전에 잇몸을 먼저 마취해요</small></div></div>
+      <div class="float f2"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="14" rx="3"/><path d="M8 21h8M9 9l2 2 4-4"/></svg></span><div><b>3D 화면으로 설명</b><small>내 치아를 직접 보고 결정</small></div></div>
+      <div class="float f3"><div><small>지금 대기 현황</small><b id="waitTxt">대기 2명 · 약 15분</b></div><div class="bars" id="waitBars"><i style="height:30%"></i><i style="height:55%"></i><i style="height:80%"></i><i style="height:45%"></i><i style="height:65%"></i><i style="height:35%"></i><i style="height:50%"></i></div></div>
+    </div>
+  </div>
+  <div class="mq" aria-hidden="true"><div class="mq-in">
+    <span>PAINLESS CARE</span><span>임플란트</span><span>투명교정</span><span>미백 · 라미네이트</span><span>신경치료</span><span>소아치과</span><span>스케일링</span>
+    <span>PAINLESS CARE</span><span>임플란트</span><span>투명교정</span><span>미백 · 라미네이트</span><span>신경치료</span><span>소아치과</span><span>스케일링</span>
+  </div></div>
+</div></section>
+
+<!-- PROMISE -->
+<section class="sec" id="promise"><div class="wrap promise">
+  <div class="sticky">
+    <span class="eyebrow">Our Promise</span>
+    <h2 class="h2">치과 의자에<br>앉기 전부터,<br><em>온유의 약속.</em></h2>
+    <p class="lead">치과가 무서운 이유는 아픔, 모르는 것, 비용 세 가지입니다. 온유치과는 이 세 가지부터 먼저 없앱니다.</p>
+  </div>
+  <div class="stack" id="stack">
+    <article class="pcard">
+      <div><span class="no">01 — 아프지 않게</span><h3>마취도 단계가 있습니다</h3><p>표면 마취로 잇몸을 먼저 무디게 하고, 일정한 속도로 약이 들어가는 무통 마취기를 사용합니다. 치료 중 손을 들면 언제든 멈춥니다.</p></div>
+      <div class="art"><svg width="120" height="120" viewBox="0 0 120 120" fill="none"><circle cx="60" cy="60" r="44" stroke="#2948FF" stroke-width="3" stroke-dasharray="6 8"/><path d="M42 64c6 8 30 8 36 0" stroke="#2948FF" stroke-width="5" stroke-linecap="round"/><circle cx="46" cy="50" r="5" fill="#2948FF"/><circle cx="74" cy="50" r="5" fill="#2948FF"/></svg></div>
+    </article>
+    <article class="pcard co">
+      <div><span class="no">02 — 설명 먼저</span><h3>내 치아를 화면으로 보고 결정합니다</h3><p>3D CT와 구강 스캐너로 찍은 내 치아를 모니터에 띄워 원장이 직접 설명합니다. 이해될 때까지 치료를 시작하지 않습니다.</p></div>
+      <div class="art"><svg width="130" height="110" viewBox="0 0 130 110" fill="none"><rect x="8" y="8" width="114" height="76" rx="12" stroke="#fff" stroke-width="3"/><path d="M30 60c8-24 14-24 18 0s10 24 18 0 14-24 18 0 10 24 16 0" stroke="#D9FF5C" stroke-width="4" stroke-linecap="round"/><path d="M45 102h40M65 84v18" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg></div>
+    </article>
+    <article class="pcard lime">
+      <div><span class="no">03 — 과잉진료 없이</span><h3>치료 계획은 항상 두 가지로</h3><p>꼭 필요한 치료와 선택 가능한 치료를 나눠서, 비용이 다른 두 가지 계획을 함께 보여드립니다. 오늘 결정하지 않으셔도 괜찮습니다.</p></div>
+      <div class="art"><svg width="120" height="120" viewBox="0 0 120 120" fill="none"><rect x="14" y="22" width="40" height="76" rx="10" stroke="#0B1324" stroke-width="3"/><rect x="66" y="22" width="40" height="76" rx="10" fill="#0B1324"/><path d="M24 44h20M24 56h14M76 44h20M76 56h14" stroke="#D9FF5C" stroke-width="3" stroke-linecap="round"/><path d="M24 44h20M24 56h14" stroke="#0B1324" stroke-width="3" stroke-linecap="round"/></svg></div>
+    </article>
+    <article class="pcard dark">
+      <div><span class="no" style="color:var(--lime)">04 — 끝까지</span><h3>치료가 끝나도 알림은 계속됩니다</h3><p>정기 검진 시기, 스케일링 보험 적용 시기를 카카오톡으로 먼저 알려드립니다. 임플란트는 치료 후에도 정기적으로 관리합니다.</p></div>
+      <div class="art"><svg width="120" height="120" viewBox="0 0 120 120" fill="none"><path d="M60 22a26 26 0 0 0-26 26v18l-8 12h68l-8-12V48a26 26 0 0 0-26-26Z" stroke="#D9FF5C" stroke-width="3"/><path d="M50 88a10 10 0 0 0 20 0" stroke="#D9FF5C" stroke-width="3"/></svg></div>
+    </article>
+  </div>
+</div></section>
+
+<!-- DEPARTMENTS -->
+<section class="sec" id="dept" style="padding-top:40px"><div class="wrap">
+  <div class="sec-head">
+    <div><span class="eyebrow">Clinic</span><h2 class="h2 rv">필요한 치료를<br><em>한 곳에서.</em></h2></div>
+    <p class="lead rv d1" style="max-width:440px">진료과목별 담당 원장이 정해져 있어, 처음 상담한 원장이 치료와 사후 관리까지 이어서 봅니다.</p>
+  </div>
+  <div class="bento">
+    <a href="#cost" class="dept ph b1 rv" data-cost="implant"><img src="img/implant.jpg" alt="환하게 웃는 중년 여성" loading="lazy" style="object-position:50% 25%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>임플란트</span><span>틀니</span><span>뼈이식</span></div><div><h3>임플란트 센터</h3><p>3D CT로 잇몸뼈를 먼저 확인하고, 만 65세 이상 건강보험 임플란트도 상담해 드립니다.</p></div></a>
+    <a href="#cost" class="dept ph b2 rv d1" data-cost="ortho"><img src="img/ortho.jpg" alt="웃고 있는 청년" loading="lazy" style="object-position:50% 20%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>투명교정</span><span>부분교정</span></div><div><h3>교정 센터</h3><p>티 나지 않는 투명교정부터 앞니만 가지런히 하는 부분교정까지.</p></div></a>
+    <a href="#white" class="dept ph b3 rv" ><img src="img/whiten.jpg" alt="커피를 들고 웃는 여성" loading="lazy" style="object-position:50% 30%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>미백</span><span>라미네이트</span></div><div><h3>미백 · 심미</h3><p>커피·와인 착색은 전문가 미백으로.</p></div></a>
+    <a href="#booking" class="dept ph b4 rv d1"><img src="img/kid.jpg" alt="양치하는 아이" loading="lazy" style="object-position:40% 30%"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>불소</span><span>실란트</span></div><div><h3>소아치과</h3><p>처음 치과가 즐거운 기억이 되도록.</p></div></a>
+    <a href="#tooth" class="dept co b5 rv d2"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>충치</span><span>신경치료</span></div><div><h3>보존 · 신경치료</h3><p>최대한 내 치아를 살리는 치료.</p></div></a>
+    <a href="#cost" class="dept b6 rv d3"><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M7 17 17 7M8 7h9v9"/></svg></span><div class="tags"><span>스케일링</span><span>잇몸치료</span></div><div><span class="big">1년 1회</span><h3 style="margin-top:8px">스케일링 보험 적용</h3><p style="color:var(--ink2)">만 19세 이상, 매년 건강보험 적용</p></div></a>
+  </div>
+</div></section>
+
+<!-- TOOTH MAP -->
+<section class="sec" id="tooth" style="background:#fff"><div class="wrap">
+  <div class="sec-head">
+    <div><span class="eyebrow">Find My Tooth</span><h2 class="h2 rv">어디가 아픈지<br><em>먼저 눌러보세요.</em></h2></div>
+    <p class="lead rv d1" style="max-width:460px">불편한 치아와 증상을 고르면 예상되는 원인과 치료를 알려드립니다. 담아둔 치아는 예약할 때 원장에게 그대로 전달됩니다.</p>
+  </div>
+  <div class="tm">
+    <div class="card tm-map rv" style="background:var(--bg);box-shadow:none">
+      <svg id="teeth" viewBox="0 0 600 560" aria-label="치아 선택 지도"></svg>
+      <div class="tm-legend"><span><i style="background:#fff;border:1px solid #C6CEDE"></i>정상</span><span><i style="background:var(--co)"></i>선택 중</span><span><i style="background:var(--lime)"></i>상담 리스트</span><span style="margin-left:auto;font-family:var(--disp);font-weight:700">↑ 위 · 아래 ↓ · 화면 왼쪽이 내 오른쪽</span></div>
+    </div>
+    <div class="card tm-side rv d1" style="background:var(--bg);box-shadow:none">
+      <div><div class="tsub" id="tNo">TOOTH #36</div><div class="tname" id="tName">왼쪽 아래 첫째 큰어금니</div></div>
+      <div><h4>어떤 증상이 있나요? (여러 개 선택)</h4><div class="chips" id="symp"></div></div>
+      <div class="result" id="tRes"></div>
+      <button class="btn btn-co" id="addTooth">이 치아 상담 리스트에 담기</button>
+      <div><h4>상담 리스트</h4><div class="cart" id="cart"><span class="empty">아직 담은 치아가 없어요</span></div></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- COST -->
+<section class="sec" id="cost"><div class="wrap">
+  <div class="sec-head">
+    <div><span class="eyebrow">Price Check</span><h2 class="h2 rv">비용이 걱정이라면,<br><em>미리 계산해 보세요.</em></h2></div>
+    <p class="lead rv d1" style="max-width:440px">치료 항목과 개수를 고르면 예상 비용과 월 납부 금액이 바로 계산됩니다. 건강보험 적용 항목은 따로 표시했어요.</p>
+  </div>
+  <div class="calc">
+    <div class="card items rv" id="items"></div>
+    <aside class="card sum rv d1">
+      <h4>예상 진료비 합계</h4>
+      <div class="total"><span id="total">0</span><small>원</small></div>
+      <div class="toggle"><div><b style="font-size:15px">만 65세 이상이에요</b><div style="font-size:12.5px;color:#9AA4BA">건강보험 임플란트 (평생 2개, 본인부담 30%)</div></div><button class="sw" id="age" role="switch" aria-checked="false" aria-label="만 65세 이상"></button></div>
+      <div class="row"><span>건강보험 적용</span><b id="insSum">0원</b></div>
+      <div class="row"><span>비급여</span><b id="nonSum">0원</b></div>
+      <div style="margin-top:18px;font-size:14px;color:#B9C1D3;font-weight:600">카드 할부로 나눠 내면</div>
+      <div class="months" id="months"><button data-m="1">일시불</button><button data-m="3">3개월</button><button data-m="6" class="on">6개월</button><button data-m="10">10개월</button><button data-m="12">12개월</button></div>
+      <div class="monthly"><span style="color:#B9C1D3;font-size:14px">월 예상 납부</span><b id="monthly">0원</b></div>
+      <a href="#booking" class="btn" style="width:100%;margin-top:18px;background:var(--lime);color:var(--ink)">이 견적으로 상담 예약</a>
+      <p class="note">* 포트폴리오용 예시 금액입니다. 실제 비용은 진단 후 안내되며, 비급여 진료비는 병원 내 고지 금액을 따릅니다. 할부 수수료는 카드사 정책에 따라 다릅니다.</p>
+    </aside>
+  </div>
+</div></section>
+
+<!-- WHITENING -->
+<section class="sec" id="white" style="background:#fff"><div class="wrap">
+  <div class="sec-head">
+    <div><span class="eyebrow">Whitening Simulator</span><h2 class="h2 rv">지금 내 치아 색에서<br><em>얼마나 밝아질까요?</em></h2></div>
+    <p class="lead rv d1" style="max-width:460px">치과에서 쓰는 16단계 셰이드 가이드로 현재 색과 목표 색을 골라 보세요. 가운데 손잡이를 끌면 전후를 비교할 수 있어요.</p>
+  </div>
+  <div class="wt">
+    <div class="card wt-sim rv" style="background:var(--bg);box-shadow:none">
+      <div class="smile-wrap" id="smile">
+        <svg viewBox="0 0 640 360" class="smile-before" id="svgBefore"></svg>
+        <svg viewBox="0 0 640 360" class="smile-after" id="svgAfter"></svg>
+        <span class="lbl l">BEFORE <span id="lbB">A3</span></span><span class="lbl r">AFTER <span id="lbA">B1</span></span>
+        <div class="handle" id="handle" role="slider" aria-label="전후 비교" tabindex="0" aria-valuenow="50"></div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;color:var(--ink3);margin-bottom:8px"><span>밝음</span><span id="shadeMode">현재 색을 고르세요</span><span>어두움</span></div>
+        <div class="shade-bar" id="shades"></div>
+        <div class="chips" style="margin-top:14px"><button class="chip on" data-mode="cur">현재 내 치아 색</button><button class="chip" data-mode="goal">원하는 목표 색</button></div>
+      </div>
+      <div class="shade-info">
+        <div><small>밝아지는 단계</small><b id="stepUp">+8</b></div>
+        <div><small>예상 내원</small><b id="visits">2~3회</b></div>
+        <div><small>추천 방법</small><b id="method" style="font-size:17px">전문가 미백</b></div>
+      </div>
+    </div>
+    <div class="wt-photo rv d1">
+      <img src="img/whiten.jpg" alt="커피잔을 들고 웃는 여성" loading="lazy">
+      <div class="cap"><b>커피 하루 두 잔, 착색이 걱정이라면</b><p>전문가 미백은 치아 표면을 깎지 않고 색만 밝힙니다. 시술 후 48시간 동안은 커피·카레·와인 같은 색이 진한 음식을 피해 주세요.</p></div>
+    </div>
+  </div>
+</div></section>
+
+<!-- PROCESS -->
+<section class="proc" id="proc">
+  <div class="proc-pin">
+    <div class="wrap" style="margin-bottom:28px"><span class="eyebrow">First Visit</span><h2 class="h2">처음 오시는 날,<br><em>이렇게 진행돼요.</em></h2></div>
+    <div class="proc-track" id="track">
+      <div class="pstep intro"><span style="font-family:var(--disp);font-weight:800;color:var(--lime)">60 MIN</span><div><h3>첫 방문은<br>약 1시간이면<br>충분해요.</h3><p style="margin-top:14px">치료를 바로 시작하지 않습니다. 오늘은 내 치아 상태를 정확히 아는 날이에요.</p></div><span style="font-size:14px;color:#DCE2FF">옆으로 스크롤 →</span></div>
+      <div class="pstep"><div class="pimg"><img src="img/room3.jpg" alt="진료 장비" loading="lazy"></div><div class="pbody"><span class="pn">STEP 01 · 10분</span><h3>접수와 문진</h3><p>복용 중인 약, 치과 공포 정도, 불편한 곳을 편하게 말씀해 주세요.</p></div></div>
+      <div class="pstep"><div class="pimg"><img src="img/room1.jpg" alt="진료실" loading="lazy"></div><div class="pbody"><span class="pn">STEP 02 · 15분</span><h3>3D CT · 구강 스캔</h3><p>본뜨는 재료 대신 구강 스캐너로 빠르고 편하게 촬영합니다.</p></div></div>
+      <div class="pstep"><div class="pimg"><img src="img/consult.jpg" alt="모니터로 엑스레이를 설명하는 의료진" loading="lazy"></div><div class="pbody"><span class="pn">STEP 03 · 20분</span><h3>원장 상담 · 치료 계획 2안</h3><p>내 치아 사진을 함께 보며 필요한 치료와 선택 치료를 나눠 설명합니다.</p></div></div>
+      <div class="pstep"><div class="pimg"><img src="img/micro.jpg" alt="현미경을 보며 진료하는 의료진" loading="lazy"></div><div class="pbody"><span class="pn">STEP 04 · 이후</span><h3>치료와 사후 알림</h3><p>예약한 날 치료를 진행하고, 다음 검진 시기는 카카오톡으로 알려드려요.</p></div></div>
+    </div>
+    <div class="proc-bar"><i id="procBar"></i></div>
+  </div>
+</section>
+
+<!-- DOCTORS -->
+<section class="sec" id="doctors"><div class="wrap">
+  <div class="sec-head">
+    <div><span class="eyebrow">Doctors</span><h2 class="h2 rv">상담한 원장이<br><em>끝까지 진료합니다.</em></h2></div>
+    <p class="lead rv d1" style="max-width:440px">사진에 마우스를 올리면 원장의 모습을 컬러로 볼 수 있어요. 진료과목별로 담당 원장이 정해져 있습니다.</p>
+  </div>
+  <div class="docs">
+    <article class="doc rv"><div class="dp"><img src="img/doc1.jpg" alt="정우진 대표원장" loading="lazy"><span class="role">대표원장</span></div><div class="db"><h3>정우진<small>대표원장</small></h3><div class="sp">임플란트 · 보철</div><q>임플란트는 심는 날보다 10년 뒤가 더 중요합니다.</q><ul><li>치과보철과 전문의</li><li>대학병원 보철과 외래교수</li><li>디지털 가이드 임플란트 연구회 정회원</li></ul></div></article>
+    <article class="doc rv d1"><div class="dp"><img src="img/doc2.jpg" alt="한서윤 원장" loading="lazy" style="object-position:50% 20%"><span class="role">원장</span></div><div class="db"><h3>한서윤<small>원장</small></h3><div class="sp">교정 · 심미</div><q>웃을 때 손으로 입을 가리지 않게 되는 것, 그게 목표예요.</q><ul><li>치과교정과 전문의</li><li>투명교정 인증의</li><li>대한치과교정학회 정회원</li></ul></div></article>
+    <article class="doc rv d2"><div class="dp"><img src="img/doc3.jpg" alt="이도현 원장" loading="lazy" style="object-position:50% 25%"><span class="role">원장</span></div><div class="db"><h3>이도현<small>원장</small></h3><div class="sp">보존 · 신경치료</div><q>뽑기 전에 살릴 수 있는 방법을 끝까지 찾습니다.</q><ul><li>치과보존과 전문의</li><li>미세현미경 신경치료</li><li>대한치과보존학회 정회원</li></ul></div></article>
+  </div>
+</div></section>
+
+<!-- GALLERY -->
+<section style="padding-bottom:40px">
+  <div class="wrap sec-head" style="margin-bottom:28px"><div><span class="eyebrow">Space</span><h2 class="h2 rv">소리도 시선도<br><em>걱정 없는 1인 진료실.</em></h2></div><p class="lead rv d1" style="max-width:400px">옆으로 끌어서 둘러보세요.</p></div>
+  <div class="gal" id="gal">
+    <figure><div class="gi"><img src="img/room4.jpg" alt="1인 진료실"></div><figcaption>1인 진료실<span>01</span></figcaption></figure>
+    <figure><div class="gi"><img src="img/room1.jpg" alt="진료 의자"></div><figcaption>무통 마취 진료 체어<span>02</span></figcaption></figure>
+    <figure><div class="gi"><img src="img/consult.jpg" alt="상담 장면"></div><figcaption>3D 화면 상담<span>03</span></figcaption></figure>
+    <figure><div class="gi"><img src="img/micro.jpg" alt="현미경 진료"></div><figcaption>미세현미경 진료<span>04</span></figcaption></figure>
+    <figure><div class="gi"><img src="img/room3.jpg" alt="진료 장비"></div><figcaption>멸균 개별 포장 기구<span>05</span></figcaption></figure>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" id="faq"><div class="wrap faq">
+  <div><span class="eyebrow">FAQ</span><h2 class="h2 rv">자주 묻는<br><em>질문.</em></h2><p class="lead rv d1">더 궁금한 점은 카카오톡으로 편하게 남겨주세요.</p></div>
+  <div id="qas">
+    <div class="qa open"><button>치과가 너무 무서운데, 수면 진료도 되나요?<span class="pm">+</span></button><div class="ans"><div><p>네. 긴장이 심하신 분은 의식하진정(수면) 진료를 상담해 드립니다. 건강 상태 확인 후 진행하며, 진료 당일에는 보호자 동행을 권장합니다.</p></div></div></div>
+    <div class="qa"><button>만 65세 이상 임플란트 보험은 어떻게 적용되나요?<span class="pm">+</span></button><div class="ans"><div><p>만 65세 이상이면 평생 2개까지 건강보험이 적용되어 본인부담금이 30% 수준으로 줄어듭니다. 잇몸뼈 상태에 따라 추가 시술은 비급여일 수 있어, 3D CT 촬영 후 정확히 안내해 드립니다.</p></div></div></div>
+    <div class="qa"><button>스케일링은 얼마나 자주 받아야 하나요?<span class="pm">+</span></button><div class="ans"><div><p>보통 6개월~1년에 한 번을 권장합니다. 만 19세 이상은 연 1회 건강보험이 적용되며, 시기가 되면 카카오톡으로 알려드려요.</p></div></div></div>
+    <div class="qa"><button>신경치료는 몇 번 와야 하나요?<span class="pm">+</span></button><div class="ans"><div><p>염증 정도에 따라 보통 2~4회 내원합니다. 신경치료 후에는 치아가 약해지므로 크라운으로 씌워 보호하는 것을 권장합니다.</p></div></div></div>
+    <div class="qa"><button>예약 없이 방문해도 진료가 가능한가요?<span class="pm">+</span></button><div class="ans"><div><p>가능하지만 예약 환자가 우선이라 대기가 길어질 수 있어요. 통증이 심한 응급 상황은 전화 주시면 가장 빠른 시간으로 잡아드립니다.</p></div></div></div>
+  </div>
+</div></section>
+
+<!-- BOOKING -->
+<section class="sec" id="booking" style="background:#fff"><div class="wrap">
+  <div class="sec-head">
+    <div><span class="eyebrow">Reservation</span><h2 class="h2 rv">원하는 시간에,<br><em>30초 예약.</em></h2></div>
+    <p class="lead rv d1" style="max-width:440px">실시간으로 비어 있는 시간을 확인하고 바로 예약하세요. 예약이 확정되면 카카오톡으로 안내가 갑니다.</p>
+  </div>
+  <div class="book">
+    <div class="card info rv" style="background:var(--bg);box-shadow:none">
+      <div style="display:flex;justify-content:space-between;align-items:center"><b style="font-size:20px">진료 시간</b><span class="chip" id="nowChip" style="background:#fff">확인 중</span></div>
+      <table class="hours" id="hours">
+        <tr data-d="1"><td>월요일</td><td>10:00 – 19:00</td></tr>
+        <tr data-d="2"><td>화요일</td><td>10:00 – 19:00</td></tr>
+        <tr data-d="3"><td>수요일</td><td>10:00 – 19:00</td></tr>
+        <tr data-d="4"><td>목요일 (야간)</td><td>10:00 – 21:00</td></tr>
+        <tr data-d="5"><td>금요일</td><td>10:00 – 19:00</td></tr>
+        <tr data-d="6"><td>토요일</td><td>10:00 – 15:00</td></tr>
+        <tr data-d="0"><td>일요일 · 공휴일</td><td style="color:var(--red)">휴진</td></tr>
+      </table>
+      <div style="font-size:13.5px;color:var(--ink3)">점심시간 13:00 – 14:00 · 토요일은 점심시간 없이 진료</div>
+      <div class="map">
+        <svg viewBox="0 0 400 250" aria-label="약도">
+          <rect width="400" height="250" fill="#E6EAF2"/>
+          <path d="M0 150h400M210 0v250" stroke="#fff" stroke-width="18"/>
+          <path d="M0 60h400M90 0v250M320 0v250" stroke="#fff" stroke-width="8"/>
+          <rect x="230" y="78" width="70" height="56" rx="10" fill="#2948FF"/>
+          <text x="265" y="111" text-anchor="middle" fill="#fff" font-size="13" font-weight="800" font-family="Pretendard Variable, sans-serif">온유치과</text>
+          <circle cx="210" cy="150" r="12" fill="#0B1324"/><text x="210" y="155" text-anchor="middle" fill="#D9FF5C" font-size="12" font-weight="800">M</text>
+          <path d="M222 146c14-6 20-12 24-12" stroke="#2948FF" stroke-width="3" stroke-dasharray="5 5" fill="none"/>
+          <text x="160" y="180" fill="#4B5567" font-size="11" font-weight="700" font-family="Pretendard Variable, sans-serif">합정역 7번 출구</text>
+          <text x="14" y="144" fill="#8A93A6" font-size="10" font-family="Pretendard Variable, sans-serif">양화로</text>
+        </svg>
+      </div>
+      <div style="font-size:15px"><b>서울 마포구 양화로 OO (가상 주소)</b><div style="color:var(--ink3);font-size:14px">합정역 7번 출구 도보 3분 · 건물 지하 주차 2시간 무료</div></div>
+      <div style="display:flex;gap:8px"><a class="btn btn-ink" style="flex:1" href="tel:020000000">전화 상담</a><button class="btn btn-ghost demo-kakao" style="flex:1;background:#FEE500;border:0">카카오톡 상담</button></div>
+    </div>
+
+    <div class="card bk rv d1" style="background:var(--bg);box-shadow:none" id="bk">
+      <div class="steps"><span class="on"></span><span></span><span></span></div>
+      <div class="pane on" data-p="1">
+        <h3>어떤 진료가 필요하세요?</h3><p class="hint">여러 개 골라도 돼요. 치아 찾기에서 담은 치아도 함께 전달됩니다.</p>
+        <div class="chips" id="svc"></div>
+        <div style="margin-top:18px"><div style="font-size:13px;font-weight:700;color:var(--ink2);margin-bottom:8px">상담 리스트에 담은 치아</div><div class="cart" id="cart2"><span class="empty">없음 · <a href="#tooth" style="color:var(--co);font-weight:700">치아 찾기</a>에서 담을 수 있어요</span></div></div>
+        <div class="nav-btns"><span></span><button class="btn btn-co" data-next="2">날짜 고르기 →</button></div>
+      </div>
+      <div class="pane" data-p="2">
+        <h3>언제 오시겠어요?</h3><p class="hint">회색으로 그어진 날짜와 시간은 휴진이거나 예약이 찼어요.</p>
+        <div class="days" id="days"></div>
+        <div class="times" id="times"></div>
+        <div class="nav-btns"><button class="btn btn-ghost" data-prev="1">← 이전</button><button class="btn btn-co" data-next="3">정보 입력 →</button></div>
+      </div>
+      <div class="pane" data-p="3">
+        <h3>예약자 정보</h3><p class="hint">예약 확인 연락을 위해서만 사용해요. (데모 · 실제로 전송되지 않습니다)</p>
+        <div class="summary" id="sumBox"></div>
+        <div class="fld" id="fName"><label for="nm">이름</label><input id="nm" placeholder="홍길동" autocomplete="name"><span class="err">이름을 입력해 주세요</span></div>
+        <div class="fld" id="fTel"><label for="tl">휴대폰 번호</label><input id="tl" placeholder="010-0000-0000" inputmode="numeric" autocomplete="tel"><span class="err">휴대폰 번호를 정확히 입력해 주세요</span></div>
+        <div class="fld"><label for="memo">불편한 점 (선택)</label><textarea id="memo" placeholder="예) 찬물 마시면 왼쪽 아래가 시려요. 치과가 많이 무서워요."></textarea></div>
+        <label class="agree"><input type="checkbox" id="agree"> 예약 확인을 위한 개인정보 수집·이용에 동의합니다. (이름, 연락처 / 진료 후 1년 보관)</label>
+        <div class="nav-btns"><button class="btn btn-ghost" data-prev="2">← 이전</button><button class="btn btn-co" id="submitBk">예약 확정하기</button></div>
+      </div>
+      <div class="pane" data-p="4">
+        <div class="done">
+          <div>
+            <h3>예약이 확정됐어요 🎉</h3><p class="hint">카카오톡으로 안내 메시지를 보냈어요. (데모 화면)</p>
+            <div class="ticket" id="ticket"></div>
+            <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><button class="btn btn-ink" id="icsBtn" style="flex:1">내 캘린더에 추가</button><button class="btn btn-ghost" id="againBtn" style="flex:1">새 예약</button></div>
+          </div>
+          <div class="phone"><div class="scr" id="kakao"></div></div>
+        </div>
+      </div>
+      <div class="mybk" id="mybk" hidden><h4>내 예약 (이 브라우저에 저장된 데모 예약)</h4><div id="mylist"></div></div>
+    </div>
+  </div>
+</div></section>
+
+<section style="padding:40px 0 0"><div class="wrap"><div class="band rv">
+  <span class="ring"></span>
+  <div><h2>치과 가는 날이<br>조금 덜 무서워지도록.</h2><p style="color:#DCE2FF;margin-top:12px">첫 상담에서는 치료를 강요하지 않습니다.</p></div>
+  <div style="display:flex;gap:10px;flex-wrap:wrap;position:relative"><a href="#booking" class="btn btn-ghost">진료 예약하기</a><a href="tel:020000000" class="btn" style="border:1px solid rgba(255,255,255,.4);color:#fff">02-000-0000</a></div>
+</div></div></section>
+</main>
+
+<footer><div class="wrap">
+  <div class="fg">
+    <div><b style="font-size:18px">온유치과의원</b><p style="margin-top:8px">대표자 정우진 (가상) · 서울 마포구 양화로 OO (가상 주소)<br>사업자등록번호 000-00-00000 · 대표전화 02-000-0000</p></div>
+    <div style="text-align:right"><p>본 사이트는 Owen Web의 포트폴리오 콘셉트이며,<br>병원명·의료진·비용은 모두 가상의 예시입니다.</p><p style="margin-top:8px;font-family:var(--disp);font-weight:700;color:var(--ink)">Designed &amp; Built by OWEN WEB</p></div>
+  </div>
+</div></footer>
+
+<nav class="mbar" aria-label="빠른 메뉴">
+  <a href="tel:020000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>전화</a>
+  <a href="#" class="demo-kakao"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 4C7 4 3 7.1 3 11c0 2.5 1.7 4.7 4.2 5.9l-.9 3.3c-.1.3.3.6.6.4l3.9-2.6c.4 0 .8.1 1.2.1 5 0 9-3.1 9-7S17 4 12 4Z"/></svg>카톡 상담</a>
+  <a href="#booking" class="p">진료 예약</a>
+</nav>
+<div class="toast" id="toast"></div>
+
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const won=n=>Math.round(n).toLocaleString('ko-KR');
+const toast=(m)=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('on'),2600)};
+$$('.demo-kakao').forEach(b=>b.addEventListener('click',e=>{e.preventDefault();toast('데모 화면이에요. 실제 사이트에서는 병원 카카오톡 채널로 연결됩니다.')}));
+
+/* ---------- KST status ---------- */
+const kst=()=>{const p=new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Seoul',weekday:'short',hour:'2-digit',minute:'2-digit',hour12:false,year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());const g=t=>p.find(x=>x.type===t).value;const wd={Sun:0,Mon:1,Tue:2,Wed:3,Thu:4,Fri:5,Sat:6}[g('weekday')];return{y:+g('year'),m:+g('month'),d:+g('day'),wd,h:+g('hour')%24,mi:+g('minute')}};
+const HOURS={0:null,1:[10,19],2:[10,19],3:[10,19],4:[10,21],5:[10,19],6:[10,15]};
+const HOLI=['2026-12-25','2027-01-01','2027-02-06','2027-02-07','2027-02-08','2027-03-01','2027-03-02'];
+function status(){const k=kst();const t=k.h+k.mi/60;const key=`${k.y}-${String(k.m).padStart(2,'0')}-${String(k.d).padStart(2,'0')}`;const hr=HOLI.includes(key)?null:HOURS[k.wd];let txt,on=false;
+  if(!hr)txt='오늘은 휴진이에요 · 온라인 예약은 언제든 가능';
+  else if(t<hr[0])txt=`오늘 ${hr[0]}:00에 진료를 시작해요`;
+  else if(t>=hr[1])txt='오늘 진료가 끝났어요 · 온라인 예약 가능';
+  else if(k.wd!==6&&t>=13&&t<14)txt='지금은 점심시간 · 14:00부터 진료';
+  else{txt=`지금 진료 중 · 오늘 ${hr[1]}:00까지`;on=true}
+  $('#liveTxt').textContent=txt;$('#liveDot').classList.toggle('off',!on);
+  const c=$('#nowChip');c.textContent=on?'● 지금 진료 중':'진료 시간 아님';c.style.color=on?'var(--mint)':'var(--ink3)';
+  $$('#hours tr').forEach(r=>r.classList.toggle('today',+r.dataset.d===k.wd));
+  const w=on?(1+((k.h*7+k.mi)%4)):0;$('#waitTxt').textContent=on?`대기 ${w}명 · 약 ${w*7+3}분`:'지금은 대기 없음 · 예약 접수 중';
+  $$('#waitBars i').forEach((b,i)=>b.classList.toggle('on',on&&i===Math.min(6,Math.max(0,k.h-12))));
+}
+status();setInterval(status,30000);
+
+/* ---------- header, progress, reveal, parallax ---------- */
+const hd=$('#hd'),prog=$('#prog'),heroImg=$('#heroImg');
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12,rootMargin:'0px 0px -40px 0px'});
+$$('.rv').forEach(el=>io.observe(el));
+const cards=$$('.pcard');
+const proc=$('#proc'),track=$('#track'),pbar=$('#procBar');
+function onScroll(){const y=scrollY,h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(y/h*100)+'%';hd.classList.toggle('sc',y>40);
+  if(heroImg&&y<900)heroImg.style.transform=`translateY(${-y*0.08}px)`;
+  cards.forEach((c,i)=>{const n=cards[i+1];if(!n){c.style.transform='';return}const r=n.getBoundingClientRect(),top=parseFloat(getComputedStyle(n).top);const d=Math.max(0,Math.min(1,1-(r.top-top)/400));c.style.transform=`scale(${1-d*0.05})`;c.style.filter=`brightness(${1-d*0.08})`});
+  if(innerWidth>760){const r=proc.getBoundingClientRect();const total=proc.offsetHeight-innerHeight;const p=Math.max(0,Math.min(1,-r.top/total));const max=track.scrollWidth-innerWidth+Math.max(24,(innerWidth-1240)/2);track.style.transform=`translateX(${-p*max}px)`;pbar.style.width=(p*100)+'%'}
+}
+addEventListener('scroll',onScroll,{passive:true});addEventListener('resize',onScroll);onScroll();
+const sections=['dept','tooth','cost','white','doctors','booking'];
+const nio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){$$('nav.gnb a').forEach(a=>a.classList.toggle('act',a.getAttribute('href')==='#'+e.target.id))}}),{rootMargin:'-45% 0px -50% 0px'});
+sections.forEach(id=>nio.observe(document.getElementById(id)));
+const mnav=$('#mnav');$('#burger').onclick=()=>{mnav.classList.add('open');mnav.setAttribute('aria-hidden','false')};
+const closeM=()=>{mnav.classList.remove('open');mnav.setAttribute('aria-hidden','true')};$('#mclose').onclick=closeM;$$('#mnav a').forEach(a=>a.onclick=closeM);
+
+/* ---------- Tooth map ---------- */
+const svg=$('#teeth');const NS='http://www.w3.org/2000/svg';
+const QN={1:'오른쪽 위',2:'왼쪽 위',3:'왼쪽 아래',4:'오른쪽 아래'};
+const DN={1:'첫째 앞니',2:'둘째 앞니',3:'송곳니',4:'첫째 작은어금니',5:'둘째 작은어금니',6:'첫째 큰어금니',7:'둘째 큰어금니',8:'사랑니'};
+const SIZE={1:[30,38],2:[27,34],3:[29,38],4:[31,32],5:[31,32],6:[42,38],7:[40,36],8:[36,33]};
+const shapeP=(w,h,t)=>{if(t<=2)return `M${-w/2} ${-h/2+6}Q0 ${-h/2-4} ${w/2} ${-h/2+6}L${w/2-3} ${h/2-6}Q0 ${h/2+4} ${-w/2+3} ${h/2-6}Z`;
+  if(t===3)return `M${-w/2} ${-h/2+10}Q0 ${-h/2-8} ${w/2} ${-h/2+10}L${w/2-4} ${h/2-6}Q0 ${h/2+4} ${-w/2+4} ${h/2-6}Z`;
+  const r=t>=6?12:10;return `M${-w/2+r} ${-h/2}H${w/2-r}Q${w/2} ${-h/2} ${w/2} ${-h/2+r}V${h/2-r}Q${w/2} ${h/2} ${w/2-r} ${h/2}H${-w/2+r}Q${-w/2} ${h/2} ${-w/2} ${h/2-r}V${-h/2+r}Q${-w/2} ${-h/2} ${-w/2+r} ${-h/2}Z`};
+function arch(order,cx,cy,rx,ry,a0,a1,up){const n=order.length;order.forEach((no,i)=>{const t=(a0+(a1-a0)*(i+.5)/n)*Math.PI/180;const x=cx+rx*Math.cos(t),y=cy+ry*Math.sin(t);const d=no%10;const [w,h]=SIZE[d];const rot=(t*180/Math.PI)+(up?90:-90);
+  const g=document.createElementNS(NS,'g');g.setAttribute('class','tooth');g.dataset.no=no;g.setAttribute('transform',`translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${rot.toFixed(1)})`);g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',`${no}번 ${QN[Math.floor(no/10)]} ${DN[d]}`);
+  const p=document.createElementNS(NS,'path');p.setAttribute('d',shapeP(w,h,d));g.appendChild(p);
+  const tx=document.createElementNS(NS,'text');tx.setAttribute('text-anchor','middle');tx.setAttribute('dy','4');tx.setAttribute('transform',`rotate(${-rot.toFixed(1)})`);tx.textContent=no;g.appendChild(tx);svg.appendChild(g)})}
+arch([18,17,16,15,14,13,12,11,21,22,23,24,25,26,27,28],300,262,238,200,188,352,true);
+arch([48,47,46,45,44,43,42,41,31,32,33,34,35,36,37,38],300,298,226,196,172,8,false);
+const lab=(x,y,t)=>{const e=document.createElementNS(NS,'text');e.setAttribute('x',x);e.setAttribute('y',y);e.setAttribute('text-anchor','middle');e.setAttribute('style','font:800 13px Bricolage Grotesque,sans-serif;fill:#8A93A6;letter-spacing:.12em');e.textContent=t;svg.appendChild(e)};
+lab(300,190,'UPPER');lab(300,385,'LOWER');lab(70,285,'R');lab(530,285,'L');
+const SYM=[['cold','찬물에 시려요'],['bite','씹을 때 아파요'],['night','밤에 욱신거려요'],['loose','흔들려요'],['broken','깨지거나 금 갔어요'],['gum','잇몸이 부었어요'],['missing','빠지고 없어요'],['color','색이 변했어요']];
+const symBox=$('#symp');SYM.forEach(([k,l])=>{const b=document.createElement('button');b.className='chip';b.dataset.k=k;b.textContent=l;b.setAttribute('aria-pressed','false');b.onclick=()=>{b.setAttribute('aria-pressed',b.getAttribute('aria-pressed')==='true'?'false':'true');renderRes()};symBox.appendChild(b)});
+let cur=36;const cart=new Set(JSON.parse(localStorage.getItem('onyu-teeth')||'[]'));
+function typeOf(d){return d<=2?'앞니':d===3?'송곳니':d<=5?'작은어금니':d===8?'사랑니':'큰어금니'}
+function advise(no,syms){const d=no%10,t=typeOf(d);const out=[];let title='정기 검진으로 확인해요';
+  if(!syms.length){title=`${t}, 이런 문제가 자주 생겨요`;
+    if(t==='앞니')out.push('부딪혀 깨지거나 색이 변하기 쉬워요 → 레진·라미네이트','덧니·벌어짐이 신경 쓰이면 부분교정 상담');
+    else if(t==='송곳니')out.push('잇몸 쪽이 패여 시린 경우가 많아요 → 치경부 레진','교합의 중심이라 깨지면 빠르게 치료하는 게 좋아요');
+    else if(t==='작은어금니')out.push('치아 사이 충치가 잘 생겨요 → 레진·인레이','교정 시 발치 대상이 되기도 해요');
+    else if(t==='사랑니')out.push('누워 나거나 일부만 나오면 염증이 반복돼요 → 발치 권장','3D CT로 신경과의 거리를 먼저 확인해요');
+    else out.push('씹는 면 홈에 충치가 가장 많이 생겨요 → 레진·인레이','깊어지면 신경치료 후 크라운이 필요해요');
+    return {title,out}}
+  const s=new Set(syms);
+  if(s.has('missing')){title='빈자리는 오래 둘수록 손해예요';out.push('임플란트: 옆 치아를 깎지 않고 단독으로 회복','브릿지: 양옆 치아를 씌워 연결 (치료 기간 짧음)','오래 비워두면 옆 치아가 기울고 잇몸뼈가 줄어들어요');return{title,out}}
+  if(t==='사랑니'&&(s.has('gum')||s.has('bite')||s.has('night'))){title='사랑니 주위염일 가능성이 높아요';out.push('염증을 가라앉힌 뒤 발치를 권장해요','3D CT로 신경 위치를 확인하고 안전하게 발치','발치 당일 귀가, 실밥은 7일 뒤 제거');return{title,out}}
+  if(s.has('night')||(s.has('bite')&&s.has('cold'))){title='신경까지 염증이 진행됐을 수 있어요';out.push('신경치료(보험 적용) 2~4회 내원','치료 후 크라운으로 씌워 치아를 보호','통증이 심하면 당일 응급 처치 가능');}
+  else if(s.has('bite')||s.has('broken')){title='금이 갔거나 충치가 깊을 수 있어요';out.push(t==='앞니'?'작게 깨졌다면 레진, 넓으면 라미네이트':'범위에 따라 인레이 또는 크라운','금이 깊으면 신경치료가 함께 필요할 수 있어요');}
+  else if(s.has('cold')){title='시린 이 · 초기 충치일 수 있어요';out.push('잇몸 쪽 패인 부분은 치경부 레진으로 간단히','초기 충치는 레진 1회 내원으로 끝나요','시린이 전용 치약도 함께 안내해 드려요');}
+  if(s.has('loose')||s.has('gum')){if(!out.length)title='잇몸 질환(치주염)을 의심해요';out.push('스케일링 + 잇몸치료(보험 적용)로 시작','흔들림이 심하면 3D CT로 잇몸뼈 상태 확인');}
+  if(s.has('color')){if(!out.length)title='착색 또는 신경 손상 신호일 수 있어요';out.push('표면 착색은 전문가 미백으로','한 개만 어두워졌다면 신경 상태 검사가 필요해요');}
+  return{title,out}}
+function renderRes(){const syms=$$('#symp .chip').filter(b=>b.getAttribute('aria-pressed')==='true').map(b=>b.dataset.k);const a=advise(cur,syms);
+  $('#tRes').innerHTML=`<div class="rt">${a.title}</div><ul>${a.out.map(x=>`<li>${x}</li>`).join('')}</ul><p class="note" style="margin-top:12px">* 예상 안내이며 정확한 진단은 내원 검진 후 가능합니다.</p>`;
+  $('#addTooth').textContent=cart.has(cur)?'✓ 상담 리스트에 담겨 있어요 (빼기)':'이 치아 상담 리스트에 담기'}
+function select(no){cur=no;$$('.tooth').forEach(g=>g.classList.toggle('sel',+g.dataset.no===no));$('#tNo').textContent='TOOTH #'+no;$('#tName').textContent=`${QN[Math.floor(no/10)]} ${DN[no%10]}`;$$('#symp .chip').forEach(b=>b.setAttribute('aria-pressed','false'));renderRes()}
+function renderCart(){localStorage.setItem('onyu-teeth',JSON.stringify([...cart]));$$('.tooth').forEach(g=>g.classList.toggle('added',cart.has(+g.dataset.no)));
+  const html=[...cart].sort((a,b)=>a-b).map(n=>`<span>#${n} ${DN[n%10]}<button data-rm="${n}" aria-label="${n}번 빼기">×</button></span>`).join('');
+  $('#cart').innerHTML=html||'<span class="empty">아직 담은 치아가 없어요</span>';
+  $('#cart2').innerHTML=html||'<span class="empty">없음 · <a href="#tooth" style="color:var(--co);font-weight:700">치아 찾기</a>에서 담을 수 있어요</span>';
+  $$('[data-rm]').forEach(b=>b.onclick=()=>{cart.delete(+b.dataset.rm);renderCart();renderRes()})}
+svg.addEventListener('click',e=>{const g=e.target.closest('.tooth');if(g)select(+g.dataset.no)});
+svg.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){const g=e.target.closest('.tooth');if(g){e.preventDefault();select(+g.dataset.no)}}});
+$('#addTooth').onclick=()=>{if(cart.has(cur)){cart.delete(cur);toast(`#${cur} 치아를 상담 리스트에서 뺐어요`)}else{cart.add(cur);toast(`#${cur} ${DN[cur%10]}를 담았어요. 예약할 때 원장에게 전달돼요`)}renderCart();renderRes()};
+select(36);renderCart();
+
+/* ---------- Cost calculator ---------- */
+const ITEMS=[
+ {k:'scaling',n:'스케일링',d:'만 19세 이상 연 1회',p:15000,ins:true,q:1},
+ {k:'resin',n:'레진 (충치 치료)',d:'치아 1개 기준',p:120000,q:0},
+ {k:'endo',n:'신경치료',d:'2~4회 내원 합계',p:60000,ins:true,q:0},
+ {k:'inlay',n:'세라믹 인레이',d:'치아 1개 기준',p:300000,q:0},
+ {k:'crown',n:'지르코니아 크라운',d:'치아 1개 기준',p:450000,q:0},
+ {k:'implant',n:'임플란트',d:'뼈이식 별도',p:1100000,q:0,age:420000},
+ {k:'white',n:'전문가 미백',d:'3회 기준',p:300000,q:0},
+ {k:'ortho',n:'투명교정',d:'전체 교정 기준',p:4200000,q:0,max:1}
+];
+let age=false,months=6;
+const itemsEl=$('#items');
+ITEMS.forEach(it=>{const r=document.createElement('div');r.className='item';r.innerHTML=`<div><b>${it.n}</b>${it.ins?'<span class="ins">건강보험</span>':''}${it.age?'<span class="ins" data-agebadge style="display:none">65세+ 보험</span>':''}<small>${it.d}</small></div><div class="step"><button aria-label="${it.n} 빼기" data-d="-1">−</button><output>${it.q}</output><button aria-label="${it.n} 더하기" data-d="1">+</button></div><div class="price" data-pr></div>`;
+  r.querySelectorAll('[data-d]').forEach(b=>b.onclick=()=>{it.q=Math.max(0,Math.min(it.max||(it.k==='scaling'?1:28),it.q+ +b.dataset.d));r.querySelector('output').textContent=it.q;calc()});it.el=r;itemsEl.appendChild(r)});
+function unitOf(it,i){if(it.k==='implant'&&age&&i<2)return it.age;return it.p}
+function calc(){let ins=0,non=0;ITEMS.forEach(it=>{let s=0;for(let i=0;i<it.q;i++){const u=unitOf(it,i);s+=u;if(it.ins||(it.k==='implant'&&age&&i<2))ins+=u;else non+=u}
+  const pr=it.el.querySelector('[data-pr]');const u=unitOf(it,0);pr.innerHTML=it.q?`${won(s)}원`:`<span style="color:var(--ink3);font-weight:600">${it.ins||(it.k==='implant'&&age)?'약 ':''}${won(u)}원~</span>`;
+  const ab=it.el.querySelector('[data-agebadge]');if(ab)ab.style.display=age?'inline-block':'none'});
+  const tot=ins+non;animNum($('#total'),tot);$('#insSum').textContent=won(ins)+'원';$('#nonSum').textContent=won(non)+'원';
+  $('#monthly').textContent=months===1?`${won(tot)}원 (일시불)`:`${won(Math.ceil(tot/months/100)*100)}원 × ${months}개월`}
+function animNum(el,to){const from=+(el.dataset.v||0);el.dataset.v=to;const t0=performance.now();const step=t=>{const p=Math.min(1,(t-t0)/500);const e=1-Math.pow(1-p,3);el.textContent=won(from+(to-from)*e);if(p<1)requestAnimationFrame(step)};requestAnimationFrame(step)}
+$('#age').onclick=e=>{age=!age;e.currentTarget.setAttribute('aria-checked',age);calc();if(age)toast('만 65세 이상: 임플란트 2개까지 건강보험 가격으로 계산했어요')};
+$$('#months button').forEach(b=>b.onclick=()=>{months=+b.dataset.m;$$('#months button').forEach(x=>x.classList.toggle('on',x===b));calc()});
+$$('[data-cost]').forEach(a=>a.addEventListener('click',()=>{const it=ITEMS.find(x=>x.k===a.dataset.cost);if(it&&!it.q){it.q=1;it.el.querySelector('output').textContent=1;calc()}}));
+calc();
+
+/* ---------- Whitening ---------- */
+const SH=['B1','A1','B2','D2','A2','C1','C2','D4','A3','D3','B3','A3.5','B4','C3','A4','C4'];
+const lerp=(a,b,t)=>Math.round(a+(b-a)*t);const c0=[248,246,238],c1=[196,166,112];
+const COL=SH.map((_,i)=>{const t=i/15;return `rgb(${lerp(c0[0],c1[0],t)},${lerp(c0[1],c1[1],t)},${lerp(c0[2],c1[2],t)})`});
+let sCur=8,sGoal=0,mode='cur';
+function smileSVG(fill){const up=[[150,58],[214,64],[270,70],[320,74],[370,70],[426,64],[490,58]];
+  let teeth='';const xs=[96,150,206,262,320,378,434,490,544];const ws=[44,50,54,56,60,56,54,50,44];
+  xs.forEach((x,i)=>{const w=ws[i],h=i===4||i===3||i===5?118:i===2||i===6?106:92;teeth+=`<path d="M${x-w/2} 140 Q${x-w/2} ${140+h} ${x} ${140+h+6} Q${x+w/2} ${140+h} ${x+w/2} 140Z" fill="${fill}" stroke="rgba(120,90,60,.18)" stroke-width="2"/>`});
+  let low='';[150,206,262,320,378,434,490].forEach((x,i)=>{const w=[46,50,52,54,52,50,46][i];low+=`<path d="M${x-w/2} 300 Q${x-w/2} 236 ${x} 232 Q${x+w/2} 236 ${x+w/2} 300Z" fill="${fill}" stroke="rgba(120,90,60,.16)" stroke-width="2" opacity=".92"/>`});
+  return `<defs><clipPath id="m${fill.replace(/\W/g,'')}"><path d="M40 150 Q320 70 600 150 Q560 330 320 338 Q80 330 40 150Z"/></clipPath><linearGradient id="gl" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".5" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>
+  <rect width="640" height="360" fill="#F3CFC5"/>
+  <path d="M40 150 Q320 70 600 150 Q560 330 320 338 Q80 330 40 150Z" fill="#7A2E2E"/>
+  <g clip-path="url(#m${fill.replace(/\W/g,'')})"><path d="M40 130 Q320 120 600 130 L600 150 Q320 150 40 150Z" fill="#E88A8A"/>${teeth}${low}<path d="M60 140 Q320 128 580 140 L580 190 Q320 180 60 190Z" fill="url(#gl)"/><path d="M80 300 Q320 290 560 300 L560 340 L80 340Z" fill="#C85A62"/></g>
+  <path d="M24 150 Q170 60 320 96 Q470 60 616 150 Q470 118 320 130 Q170 118 24 150Z" fill="#D9707A"/>
+  <path d="M24 150 Q170 150 320 152 Q470 150 616 150 Q560 352 320 352 Q80 352 24 150Z" fill="none" stroke="#C9606A" stroke-width="26" stroke-linejoin="round"/>`}
+function renderWhite(){$('#svgBefore').innerHTML=smileSVG(COL[sCur]);$('#svgAfter').innerHTML=smileSVG(COL[sGoal]);$('#lbB').textContent=SH[sCur];$('#lbA').textContent=SH[sGoal];
+  $$('#shades button').forEach((b,i)=>{b.classList.toggle('cur',i===sCur);b.classList.toggle('goal',i===sGoal)});
+  const up=sCur-sGoal;$('#stepUp').textContent=up>0?'+'+up:'0';
+  $('#visits').textContent=up<=0?'-':up<=4?'1~2회':up<=8?'2~3회':'3~4회';
+  $('#method').textContent=up<=0?'관리만 OK':up<=4?'전문가 미백':up<=10?'미백 + 자가미백':'라미네이트 상담';
+  $('#shadeMode').textContent=mode==='cur'?'현재 색을 고르세요':'목표 색을 고르세요'}
+const shBox=$('#shades');SH.forEach((s,i)=>{const b=document.createElement('button');b.style.background=COL[i];b.title=s;b.setAttribute('aria-label','셰이드 '+s);b.onclick=()=>{if(mode==='cur'){sCur=i;if(sGoal>sCur)sGoal=sCur}else{sGoal=Math.min(i,sCur)}renderWhite()};shBox.appendChild(b)});
+$$('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;$$('[data-mode]').forEach(x=>x.classList.toggle('on',x===b));renderWhite()});
+renderWhite();
+const sm=$('#smile'),hdl=$('#handle'),aft=$('#svgAfter');
+function setSplit(p){p=Math.max(4,Math.min(96,p));hdl.style.left=p+'%';aft.style.clipPath=`inset(0 0 0 ${p}%)`;hdl.setAttribute('aria-valuenow',Math.round(p))}
+let drag=false;const mv=e=>{if(!drag)return;const r=sm.getBoundingClientRect();const x=(e.touches?e.touches[0].clientX:e.clientX)-r.left;setSplit(x/r.width*100)};
+sm.addEventListener('pointerdown',e=>{drag=true;sm.setPointerCapture(e.pointerId);mv(e)});sm.addEventListener('pointermove',mv);sm.addEventListener('pointerup',()=>drag=false);sm.addEventListener('pointercancel',()=>drag=false);
+hdl.addEventListener('keydown',e=>{const v=+hdl.getAttribute('aria-valuenow');if(e.key==='ArrowLeft')setSplit(v-4);if(e.key==='ArrowRight')setSplit(v+4)});
+let autoS=true;new IntersectionObserver(es=>{if(es[0].isIntersecting&&autoS){autoS=false;let t0=null;const run=t=>{if(!t0)t0=t;const p=(t-t0)/1600;if(drag||p>1)return;setSplit(50+Math.sin(p*Math.PI*2)*30);requestAnimationFrame(run)};requestAnimationFrame(run)}},{threshold:.6}).observe(sm);
+
+/* ---------- Gallery drag ---------- */
+const gal=$('#gal');let gx=0,gs=0,gd=false;
+gal.addEventListener('pointerdown',e=>{if(e.pointerType!=='mouse')return;gd=true;gx=e.clientX;gs=gal.scrollLeft;gal.style.scrollSnapType='none';gal.style.cursor='grabbing'});
+addEventListener('pointermove',e=>{if(gd)gal.scrollLeft=gs-(e.clientX-gx)});
+addEventListener('pointerup',()=>{if(gd){gd=false;gal.style.scrollSnapType='';gal.style.cursor=''}});
+
+/* ---------- FAQ ---------- */
+$$('.qa button').forEach(b=>b.onclick=()=>{const q=b.parentElement;const o=q.classList.contains('open');$$('.qa').forEach(x=>x.classList.remove('open'));if(!o)q.classList.add('open')});
+
+/* ---------- Booking ---------- */
+const SVC=['정기 검진·스케일링','충치·시린 이','임플란트 상담','교정 상담','미백·심미','사랑니','잇몸 치료','소아 진료','응급 통증'];
+const sel={svc:new Set(),date:null,time:null};
+const svcEl=$('#svc');SVC.forEach(s=>{const b=document.createElement('button');b.className='chip';b.textContent=s;b.setAttribute('aria-pressed','false');b.onclick=()=>{const on=b.getAttribute('aria-pressed')!=='true';b.setAttribute('aria-pressed',on);on?sel.svc.add(s):sel.svc.delete(s)};svcEl.appendChild(b)});
+const pad=n=>String(n).padStart(2,'0');
+const hash=s=>{let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619)}return (h>>>0)/4294967295};
+function dayList(){const k=kst();const base=new Date(Date.UTC(k.y,k.m-1,k.d));const out=[];for(let i=0;i<14;i++){const d=new Date(base.getTime()+i*864e5);const key=`${d.getUTCFullYear()}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`;out.push({key,wd:d.getUTCDay(),m:d.getUTCMonth()+1,d:d.getUTCDate(),today:i===0})}return out}
+const WD='일월화수목금토';
+function slots(day){const hr=HOURS[day.wd];if(!hr||HOLI.includes(day.key))return[];const out=[];const k=kst();const now=k.h*60+k.mi;
+  for(let m=hr[0]*60;m<hr[1]*60-30+1;m+=30){if(day.wd!==6&&m>=780&&m<840)continue;const t=`${pad(Math.floor(m/60))}:${pad(m%60)}`;const past=day.today&&m<=now+30;const full=hash(day.key+t)<0.28;out.push({t,dis:past||full})}return out}
+function renderDays(){const el=$('#days');el.innerHTML='';dayList().forEach(d=>{const b=document.createElement('button');const closed=!HOURS[d.wd]||HOLI.includes(d.key)||!slots(d).some(s=>!s.dis);b.disabled=closed;b.innerHTML=`<small>${d.today?'오늘':WD[d.wd]}</small>${d.d}`;b.setAttribute('aria-label',`${d.m}월 ${d.d}일 ${WD[d.wd]}요일${closed?' 예약 불가':''}`);if(sel.date&&sel.date.key===d.key)b.classList.add('on');b.onclick=()=>{sel.date=d;sel.time=null;renderDays();renderTimes()};el.appendChild(b)})}
+function renderTimes(){const el=$('#times');el.innerHTML='';if(!sel.date){el.innerHTML='<p class="hint" style="grid-column:1/-1;margin:0">날짜를 먼저 골라주세요</p>';return}
+  slots(sel.date).forEach(s=>{const b=document.createElement('button');b.textContent=s.t;b.disabled=s.dis;if(sel.time===s.t)b.classList.add('on');b.onclick=()=>{sel.time=s.t;renderTimes()};el.appendChild(b)})}
+function go(n){$$('.pane').forEach(p=>p.classList.toggle('on',+p.dataset.p===n));$$('.steps span').forEach((s,i)=>s.classList.toggle('on',i<Math.min(n,3)));if(n===2){renderDays();renderTimes()}if(n===3)renderSum();
+  const top=$('#bk').getBoundingClientRect().top;if(top<0||top>innerHeight*.5)window.scrollTo({top:scrollY+top-100,behavior:'smooth'})}
+$$('[data-next]').forEach(b=>b.onclick=()=>{const n=+b.dataset.next;if(n===2&&!sel.svc.size&&!cart.size){toast('진료 항목을 하나 이상 골라주세요');return}if(n===3&&(!sel.date||!sel.time)){toast('날짜와 시간을 골라주세요');return}go(n)});
+$$('[data-prev]').forEach(b=>b.onclick=()=>go(+b.dataset.prev));
+function svcText(){const a=[...sel.svc];if(cart.size)a.push('치아 '+[...cart].sort((x,y)=>x-y).map(n=>'#'+n).join(', '));return a.join(' · ')}
+function renderSum(){$('#sumBox').innerHTML=`<div><span>진료</span><b style="text-align:right">${svcText()}</b></div><div><span>일시</span><b>${sel.date.m}월 ${sel.date.d}일 (${WD[sel.date.wd]}) ${sel.time}</b></div>`}
+$('#tl').addEventListener('input',e=>{let v=e.target.value.replace(/\D/g,'').slice(0,11);if(v.length>7)v=v.replace(/(\d{3})(\d{3,4})(\d{4})/,'$1-$2-$3');else if(v.length>3)v=v.replace(/(\d{3})(\d+)/,'$1-$2');e.target.value=v});
+const KEY='onyu-demo-bookings';const load=()=>JSON.parse(localStorage.getItem(KEY)||'[]');const save=a=>localStorage.setItem(KEY,JSON.stringify(a));
+$('#submitBk').onclick=()=>{const nm=$('#nm').value.trim(),tl=$('#tl').value.trim();let ok=true;
+  $('#fName').classList.toggle('bad',!nm);if(!nm)ok=false;const tok=/^01[016789]-\d{3,4}-\d{4}$/.test(tl);$('#fTel').classList.toggle('bad',!tok);if(!tok)ok=false;
+  if(!ok)return;if(!$('#agree').checked){toast('개인정보 수집·이용에 동의해 주세요');return}
+  const no=`ON-${String(sel.date.key).slice(2).replace(/-/g,'')}-${Math.floor(1000+Math.random()*9000)}`;
+  const b={no,nm,tl,date:sel.date,time:sel.time,svc:svcText(),memo:$('#memo').value.trim(),at:Date.now()};const a=load();a.unshift(b);save(a);
+  showDone(b);renderMy()};
+function showDone(b){$('#ticket').innerHTML=`<small>예약번호</small><div class="no">${b.no}</div><div class="tl"><span>예약자</span><b>${b.nm} 님</b></div><div class="tl"><span>일시</span><b>${b.date.m}/${b.date.d} (${WD[b.date.wd]}) ${b.time}</b></div><div class="tl"><span>진료</span><b style="text-align:right;max-width:60%">${b.svc}</b></div>`;
+  $('#kakao').innerHTML=`<div class="kk-name"><i>온</i>온유치과</div><div class="kk"><div class="kh">예약 확정 안내</div><div class="kb">${b.nm}님, 온유치과 예약이 확정되었습니다.<br><br>▶ 일시: ${b.date.m}월 ${b.date.d}일(${WD[b.date.wd]}) ${b.time}<br>▶ 진료: ${b.svc}<br>▶ 예약번호: ${b.no}<br><br>처음 오시면 10분 일찍 와주세요. 무서우시면 접수 때 말씀만 해 주세요 :)</div><div class="kbtn">예약 변경 · 취소</div><div class="kbtn">오시는 길</div></div>`;
+  window._last=b;go(4)}
+$('#icsBtn').onclick=()=>{const b=window._last;if(!b)return;const [h,m]=b.time.split(':').map(Number);const dt=b.date.key.replace(/-/g,'')+'T'+pad(h)+pad(m)+'00';const end=b.date.key.replace(/-/g,'')+'T'+pad(h+1)+pad(m)+'00';
+  const ics=['BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//ONYU DENTAL DEMO//KO','BEGIN:VEVENT','UID:'+b.no+'@onyu-demo','DTSTAMP:'+new Date().toISOString().replace(/[-:]/g,'').slice(0,15)+'Z','DTSTART;TZID=Asia/Seoul:'+dt,'DTEND;TZID=Asia/Seoul:'+end,'SUMMARY:온유치과 진료 ('+b.svc+')','LOCATION:서울 마포구 양화로 OO (가상 주소)','DESCRIPTION:예약번호 '+b.no,'BEGIN:VALARM','TRIGGER:-PT2H','ACTION:DISPLAY','DESCRIPTION:온유치과 진료 2시간 전','END:VALARM','END:VEVENT','END:VCALENDAR'].join('\r\n');
+  const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([ics],{type:'text/calendar'}));a.download='onyu-dental-'+b.no+'.ics';a.click();toast('캘린더 파일을 내려받았어요')};
+$('#againBtn').onclick=()=>{sel.svc.clear();sel.date=null;sel.time=null;$$('#svc .chip').forEach(c=>c.setAttribute('aria-pressed','false'));$('#nm').value='';$('#tl').value='';$('#memo').value='';$('#agree').checked=false;go(1)};
+function renderMy(){const a=load();$('#mybk').hidden=!a.length;$('#mylist').innerHTML=a.slice(0,5).map(b=>`<div class="bi"><span><b>${b.date.m}/${b.date.d} ${b.time}</b> · ${b.svc}<br><small style="color:var(--ink3)">${b.no}</small></span><button data-cancel="${b.no}">취소</button></div>`).join('');
+  $$('[data-cancel]').forEach(x=>x.onclick=()=>{save(load().filter(b=>b.no!==x.dataset.cancel));renderMy();toast('예약을 취소했어요 (데모)')})}
+renderMy();
+})();
+</script>
+</body>
+</html>
